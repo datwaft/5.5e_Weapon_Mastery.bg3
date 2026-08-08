@@ -16,4 +16,6 @@
   <content contentuid="h0106f460gfbf2g4404ga0edg5786de9ec42b" version="1">When you hit with a proficient Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed on a Constitution saving throw or fall &lt;LSTag Tooltip="Prone"&gt;Prone&lt;/LSTag&gt;. The save DC is 8 + your Proficiency Bonus + the ability modifier used for the attack.</content>
   <content contentuid="h4afd7000g8675g45e1g9521g492620a95197" version="1">Push</content>
   <content contentuid="hb3efbd4ega6bcg4cd9ga88eg28e6d0397b7a" version="1">When you hit a Large or smaller creature with a proficient Greatclub, Pike, Warhammer, or Heavy Crossbow, push it up to 3 m directly away from you. Toggle this mastery off when you do not want to move your target.</content>
+  <content contentuid="hba256668g4bfdg42f9g828cg8058a7693d78" version="1">Graze</content>
+  <content contentuid="h577504b5g1fb0g487aga241gb3b74f1a8381" version="1">When you miss with a proficient Glaive or Greatsword, deal damage equal to the non-negative ability modifier used for the attack. The damage has the weapon's damage type and does not trigger effects that require a hit.</content>
 </contentList>
