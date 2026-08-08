@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+    <version major="4" minor="8" revision="0" build="500"/>
+    <region id="PassiveLists">
+        <node id="root">
+            <children>
+                <node id="PassiveList">
+                    <attribute id="Name" type="FixedString" value="Weapon Mastery"/>
+                    <attribute id="Passives" type="LSString" value="WM55_Known_Cleave,WM55_Known_Graze,WM55_Known_Nick,WM55_Known_Push,WM55_Known_Sap,WM55_Known_Slow,WM55_Known_Topple,WM55_Known_Vex"/>
+                    <attribute id="UUID" type="guid" value="8a2f175d-ac0e-4f7a-b230-c40d2d5c3cf0"/>
+                </node>
+            </children>
+        </node>
+    </region>
+</save>
