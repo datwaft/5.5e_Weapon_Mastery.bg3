@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/datwaft/bg3-ls/main/schemas/bg3-ls.schema.json",
+  "game_data": "/Users/datwaft/Library/Application Support/CrossOver/Bottles/Steam/drive_c/Program Files (x86)/Steam/steamapps/common/Baldurs Gate 3/Data",
+  "base_modules": ["Shared", "SharedDev", "Gustav", "GustavDev", "GustavX"],
+  "project": {
+    "name": "5.5e Weapon Mastery",
+    "diagnostics": {
+      "unresolved_references": "warning"
+    }
+  },
+  "localization": {
+    "language": "English"
+  },
+  "max_workspace_symbols": 200,
+  "max_completion_items": 200
+}

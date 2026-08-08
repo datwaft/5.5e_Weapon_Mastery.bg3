@@ -1,0 +1,159 @@
+name: Package mod
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LSLIB_VERSION: v1.20.4
+  LSLIB_SHA256: 5e02368fb8acafda9b45acba37a3f3bf507fc3d65a083a159abbeab06337190e
+  MODULE_FOLDER: WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617
+  PACKAGE_NAME: 5.5e_Weapon_Mastery.pak
+
+jobs:
+  package:
+    name: Build and verify package
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Download pinned LSLib
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $archive = Join-Path $env:RUNNER_TEMP "ExportTool-$env:LSLIB_VERSION.zip"
+          $url = "https://github.com/Norbyte/lslib/releases/download/$env:LSLIB_VERSION/ExportTool-$env:LSLIB_VERSION.zip"
+          Invoke-WebRequest -Uri $url -OutFile $archive
+
+          $actualHash = (Get-FileHash -Path $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actualHash -ne $env:LSLIB_SHA256) {
+            throw "LSLib checksum mismatch. Expected $env:LSLIB_SHA256, got $actualHash."
+          }
+
+          Expand-Archive -Path $archive -DestinationPath (Join-Path $env:RUNNER_TEMP "lslib")
+
+      - name: Stage game files
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $packageRoot = Join-Path $env:RUNNER_TEMP "package-root"
+          New-Item -ItemType Directory -Path $packageRoot | Out-Null
+          Copy-Item -Path "Mods" -Destination $packageRoot -Recurse
+          foreach ($optionalRoot in @("Public", "Scripts", "Generated")) {
+            if (Test-Path -LiteralPath $optionalRoot) {
+              Copy-Item -Path $optionalRoot -Destination $packageRoot -Recurse
+            }
+          }
+
+          Get-ChildItem -Path $packageRoot -Filter "*.xml" -Recurse | ForEach-Object {
+            [xml](Get-Content -Path $_.FullName -Raw) | Out-Null
+          }
+
+      - name: Create package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $divine = Join-Path $env:RUNNER_TEMP "lslib/Packed/Tools/Divine.exe"
+          $packageRoot = Join-Path $env:RUNNER_TEMP "package-root"
+          $outputDirectory = Join-Path $PWD "dist"
+          $package = Join-Path $outputDirectory $env:PACKAGE_NAME
+          New-Item -ItemType Directory -Path $outputDirectory | Out-Null
+
+          & $divine -g bg3 -a create-package -s $packageRoot -d $package -c lz4hc
+          if ($LASTEXITCODE -ne 0) {
+            throw "Divine failed to create the package."
+          }
+
+      - name: Verify package contents
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $divine = Join-Path $env:RUNNER_TEMP "lslib/Packed/Tools/Divine.exe"
+          $package = Join-Path $PWD "dist/$env:PACKAGE_NAME"
+          $listing = & $divine -g bg3 -a list-package -s $package
+          if ($LASTEXITCODE -ne 0) {
+            throw "Divine failed to read the generated package."
+          }
+
+          $paths = $listing | ForEach-Object {
+            (($_ -split "`t")[0]) -replace '\\', '/'
+          }
+          $paths | Set-Content -Path "dist/package-contents.txt"
+
+          $requiredPaths = @(
+            "Mods/$env:MODULE_FOLDER/meta.lsx",
+            "Mods/$env:MODULE_FOLDER/Localization/English/english.xml"
+          )
+          foreach ($requiredPath in $requiredPaths) {
+            if ($requiredPath -notin $paths) {
+              throw "Package is missing required path: $requiredPath"
+            }
+          }
+
+          $forbiddenPaths = @("README.md", "bg3-ls.json", ".nvim.lua")
+          foreach ($forbiddenPath in $forbiddenPaths) {
+            if ($forbiddenPath -in $paths) {
+              throw "Package contains development file: $forbiddenPath"
+            }
+          }
+
+          $hash = (Get-FileHash -Path $package -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $env:PACKAGE_NAME" | Set-Content -Path "$package.sha256"
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: bg3-pak
+          path: |
+            dist/*.pak
+            dist/*.sha256
+            dist/package-contents.txt
+          if-no-files-found: error
+          retention-days: 14
+
+  release:
+    name: Publish GitHub release
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bg3-pak
+          path: dist
+
+      - name: Create or update GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/*.pak dist/*.sha256 --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/*.pak dist/*.sha256 \
+              --verify-tag \
+              --generate-notes \
+              --title "$GITHUB_REF_NAME"
+          fi
