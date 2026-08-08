@@ -1,7 +1,11 @@
 new entry "Target_WM55_NickMainHandAttack"
 type "SpellData"
 using "Target_MainHandAttack"
-data "DualWieldingUseCosts" "BonusActionPoint:0"
+data "SpellProperties" "GROUND:DealDamage(MainMeleeWeapon,MainMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(MainHand);IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1)"
+data "SpellRoll" "Attack(AttackType.MeleeWeaponAttack)"
+data "AlternativeCastTextEvents" "%%%EMPTY"
+data "DualWieldingUseCosts" "%%%EMPTY"
+data "SpellFlags" "IsAttack;IsMelee;IsHarmful;AddFallDamageOnLand"
 
 new entry "Target_WM55_CleaveAttack"
 type "SpellData"

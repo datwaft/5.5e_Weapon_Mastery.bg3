@@ -78,7 +78,7 @@ data "BoostConditions" "WM55_CanPrepareNick() and not HasStatus('WM55_NICK_USED'
 data "Boosts" "AttackSpellOverride(Target_WM55_NickMainHandAttack,Target_MainHandAttack)"
 data "StatsFunctorContext" "OnAttack"
 data "Conditions" "not WM55_BaseMasteryIsSuppressed() and ((WM55_CanTriggerNick() and HasUseCosts('ActionPoint',true) and not HasStatus('WM55_NICK_USED',context.Source) and not Item() and not Self()) or (IsOffHandAttack() and SpellId('Target_OffhandAttack') and not HasPassive('DualWielder_PassiveBonuses',context.Source)));"
-data "StatsFunctors" "IF(WM55_CanTriggerNick() and HasUseCosts('ActionPoint',true) and not HasStatus('WM55_NICK_USED',context.Source) and not Item() and not Self()):ApplyStatus(SELF,WM55_NICK_READY,100,1);IF(IsOffHandAttack() and SpellId('Target_OffhandAttack') and not HasPassive('DualWielder_PassiveBonuses',context.Source)):ApplyStatus(SELF,WM55_NICK_USED,100,1)"
+data "StatsFunctors" "IF(WM55_CanTriggerNick() and HasUseCosts('ActionPoint',true) and not HasStatus('WM55_NICK_USED',context.Source) and not Item() and not Self()):ApplyStatus(SELF,WM55_NICK_READY,100,1);IF(IsOffHandAttack() and SpellId('Target_OffhandAttack') and not HasPassive('DualWielder_PassiveBonuses',context.Source)):ApplyStatus(SELF,WM55_NICK_USED,100,1);IF(IsOffHandAttack() and SpellId('Target_OffhandAttack') and not HasPassive('DualWielder_PassiveBonuses',context.Source)):ApplyStatus(SELF,WM55_NICK_OFFHAND_BLOCK,100,1)"
 
 new entry "WM55_Access_MeleeWeapons"
 type "PassiveData"
