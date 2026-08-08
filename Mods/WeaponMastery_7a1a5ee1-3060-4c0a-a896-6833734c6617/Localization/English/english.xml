@@ -8,4 +8,8 @@
   <content contentuid="ha20d6c83g87ccg478fg9b63gba69e6a39032" version="1">When you hit with a proficient Mace, Spear, Flail, Longsword, Morningstar, or War Pick, the target has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll before the start of your next turn.</content>
   <content contentuid="h79c92f2fg94bag4099ga283gfc1db2653249" version="1">Sapped</content>
   <content contentuid="h1f414980gfb4dg43b0ga329g47759bcf999b" version="1">Has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
+  <content contentuid="hed9e60bag177fg4aafga8a1gb802d679a8fb" version="1">Slow</content>
+  <content contentuid="h3053a4b6ga18cg44a2g8346g1d820164ee37" version="1">When you deal damage with a proficient Club, Javelin, Light Crossbow, or Longbow, reduce the target's movement speed by 3 m until the start of your next turn. Additional Slow effects do not increase this reduction.</content>
+  <content contentuid="h839cda77g23fcg4dcegaa8dg60096d473ac7" version="1">Slowed</content>
+  <content contentuid="hf4326f90gc5d0g4d5fgbb5cg2a17a4ce2663" version="1">Movement speed is reduced by 3 m.</content>
 </contentList>
