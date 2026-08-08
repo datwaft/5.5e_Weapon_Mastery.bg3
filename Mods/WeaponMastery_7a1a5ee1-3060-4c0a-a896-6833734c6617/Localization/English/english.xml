@@ -22,4 +22,6 @@
   <content contentuid="h49f29118gb717g459eg823bgd43a7c3c644f" version="1">Once per turn, when you hit a creature with a proficient Greataxe or Halberd, you can make another attack against a different creature within 1.5 m of the first target and within your weapon's reach. On a hit, the second attack deals the weapon's damage but does not add a positive ability modifier.</content>
   <content contentuid="h064343dfg3128g4174gba40gca6872a68b96" version="1">Cleave Attack</content>
   <content contentuid="h8b70d7dbg9a77g42eagb9afge63af35661e0" version="1">Attack another creature near the target of your triggering attack. On a hit, deal the weapon's damage without adding a positive ability modifier.</content>
+  <content contentuid="heeba2dadg959eg4443gb9b9g1d0f188717c2" version="1">Nick</content>
+  <content contentuid="h53de0204g5b3fg44f2g9a76g803777b031c2" version="1">Once per turn, after you attack with a proficient Light melee weapon while wielding a proficient Dagger, Light Hammer, Sickle, or Scimitar in your off hand, your next off-hand attack that turn costs no Bonus Action. Without Dual Wielder, using it prevents further off-hand attacks that turn. With Dual Wielder, off-hand attacks made before or after Nick remain available at their normal Bonus Action cost.</content>
 </contentList>

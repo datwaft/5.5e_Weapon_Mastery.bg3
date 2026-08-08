@@ -87,6 +87,40 @@ function WM55_ToppleSaveDC()
         + WM55_AttackAbilityModifier()
 end
 
+function WM55_HasNickOffhandWeapon()
+    if context.Source == nil then
+        return ConditionResult(false)
+    end
+
+    local offhandWeapon = GetActiveWeapon(context.Source, false)
+
+    if offhandWeapon == nil or not offhandWeapon.IsValid then
+        return ConditionResult(false)
+    end
+
+    return IsWeaponOfProficiencyGroup(
+            'Daggers|LightHammers|Sickles|Scimitars',
+            offhandWeapon
+        )
+        & HasWeaponProperty(WeaponProperties.Light, offhandWeapon)
+        & IsProficientWith(context.Source, offhandWeapon)
+end
+
+function WM55_CanTriggerNick()
+    local attackWeapon = WM55_GetAttackWeapon()
+
+    if attackWeapon == nil or not attackWeapon.IsValid then
+        return ConditionResult(false)
+    end
+
+    return WM55_IsWeaponAttack()
+        & IsMeleeWeaponAttack()
+        & IsMainHandAttack()
+        & IsProficientWith(context.Source, attackWeapon)
+        & HasWeaponProperty(WeaponProperties.Light, attackWeapon)
+        & WM55_HasNickOffhandWeapon()
+end
+
 function WM55_TacticalMasterActive()
     return HasPassive('WM55_TacticalMaster_Push', context.Source)
         | HasPassive('WM55_TacticalMaster_Sap', context.Source)
