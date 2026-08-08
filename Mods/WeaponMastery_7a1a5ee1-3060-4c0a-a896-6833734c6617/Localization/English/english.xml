@@ -12,4 +12,6 @@
   <content contentuid="h3053a4b6ga18cg44a2g8346g1d820164ee37" version="1">When you deal damage with a proficient Club, Javelin, Light Crossbow, or Longbow, reduce the target's movement speed by 3 m until the start of your next turn. Additional Slow effects do not increase this reduction.</content>
   <content contentuid="h839cda77g23fcg4dcegaa8dg60096d473ac7" version="1">Slowed</content>
   <content contentuid="hf4326f90gc5d0g4d5fgbb5cg2a17a4ce2663" version="1">Movement speed is reduced by 3 m.</content>
+  <content contentuid="ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6" version="1">Topple</content>
+  <content contentuid="h0106f460gfbf2g4404ga0edg5786de9ec42b" version="1">When you hit with a proficient Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed on a Constitution saving throw or fall &lt;LSTag Tooltip="Prone"&gt;Prone&lt;/LSTag&gt;. The save DC is 8 + your Proficiency Bonus + the ability modifier used for the attack.</content>
 </contentList>
