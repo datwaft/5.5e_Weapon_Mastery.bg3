@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contentList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <content contentuid="h7954301bge14ag4fdcg9483g86ba9e4b1a15" version="1">Vex</content>
+  <content contentuid="he4a0e276g77f7g4a24gb651gfc399375381c" version="1">When you damage a creature with a proficient Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against that creature before the end of your next turn.</content>
+  <content contentuid="he991932dg27c8g4513g8e9fg1d4d1e3724be" version="1">Vexed</content>
+  <content contentuid="h451c78b2g90c9g4a39g8c4eg48f45dd84cd8" version="1">The creature that applied Vex has &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on its next attack against this target.</content>
 </contentList>
