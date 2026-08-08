@@ -24,4 +24,6 @@
   <content contentuid="h8b70d7dbg9a77g42eagb9afge63af35661e0" version="1">Attack another creature near the target of your triggering attack. On a hit, deal the weapon's damage without adding a positive ability modifier.</content>
   <content contentuid="heeba2dadg959eg4443gb9b9g1d0f188717c2" version="1">Nick</content>
   <content contentuid="h53de0204g5b3fg44f2g9a76g803777b031c2" version="1">Once per turn, after you attack with a proficient Light melee weapon while wielding a proficient Dagger, Light Hammer, Sickle, or Scimitar in your off hand, your next off-hand attack that turn costs no Bonus Action. Without Dual Wielder, using it prevents further off-hand attacks that turn. With Dual Wielder, off-hand attacks made before or after Nick remain available at their normal Bonus Action cost.</content>
+  <content contentuid="h9e26e03cgfdecg4eeagadacg02d5fb4eb9b9" version="1">Weapon Mastery</content>
+  <content contentuid="hb53793e2gda95g43b8g8300gf7b46bcbe2a8" version="1">Choose mastery properties to use with eligible weapons.</content>
 </contentList>
