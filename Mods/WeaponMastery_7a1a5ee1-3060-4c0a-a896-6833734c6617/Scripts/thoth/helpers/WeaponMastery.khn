@@ -42,11 +42,32 @@ function WM55_IsProficientWithAttackWeapon()
         and IsProficientWith(context.Source, attackWeapon)
 end
 
+function WM55_IsMeleeWeapon(weapon)
+    if weapon == nil or not weapon.IsValid then
+        return ConditionResult(false)
+    end
+
+    return HasWeaponProperty(WeaponProperties.Melee, weapon)
+end
+
+function WM55_HasMasteryAccess(weapon)
+    if context.Source == nil or weapon == nil or not weapon.IsValid then
+        return ConditionResult(false)
+    end
+
+    return HasPassive('WM55_Access_ProficientWeapons', context.Source)
+        | (
+            HasPassive('WM55_Access_MeleeWeapons', context.Source)
+            & WM55_IsMeleeWeapon(weapon)
+        )
+end
+
 function WM55_CanUseMasteryOnAttack(weaponGroups)
     local attackWeapon = WM55_GetAttackWeapon()
 
     return WM55_IsWeaponAttack()
         & WM55_IsProficientWithAttackWeapon()
+        & WM55_HasMasteryAccess(attackWeapon)
         & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
 end
 
@@ -104,6 +125,7 @@ function WM55_HasNickOffhandWeapon()
         )
         & HasWeaponProperty(WeaponProperties.Light, offhandWeapon)
         & IsProficientWith(context.Source, offhandWeapon)
+        & WM55_HasMasteryAccess(offhandWeapon)
 end
 
 function WM55_CanTriggerNick()
@@ -117,6 +139,7 @@ function WM55_CanTriggerNick()
         & IsMeleeWeaponAttack()
         & IsMainHandAttack()
         & IsProficientWith(context.Source, attackWeapon)
+        & WM55_HasMasteryAccess(attackWeapon)
         & HasWeaponProperty(WeaponProperties.Light, attackWeapon)
         & WM55_HasNickOffhandWeapon()
 end
