@@ -1,0 +1,94 @@
+function WM55_GetAttackWeapon()
+    local hitDescription = context.HitDescription
+
+    if hitDescription ~= nil then
+        local thrownObject = hitDescription.ThrownObject
+
+        if thrownObject ~= nil and thrownObject.IsValid then
+            return thrownObject
+        end
+    end
+
+    return GetAttackWeapon(context.Source)
+end
+
+function WM55_IsThrownWeaponAttack()
+    local hitDescription = context.HitDescription
+
+    if hitDescription == nil then
+        return ConditionResult(false)
+    end
+
+    local thrownObject = hitDescription.ThrownObject
+
+    if thrownObject == nil or not thrownObject.IsValid then
+        return ConditionResult(false)
+    end
+
+    return SpellTypeIs(SpellType.Throw)
+        & HasWeaponProperty(WeaponProperties.Thrown, thrownObject)
+end
+
+function WM55_IsWeaponAttack()
+    return IsRangedWeaponAttack()
+        | IsMeleeWeaponAttack()
+        | WM55_IsThrownWeaponAttack()
+end
+
+function WM55_IsProficientWithAttackWeapon()
+    local attackWeapon = WM55_GetAttackWeapon()
+
+    return attackWeapon.IsValid
+        and IsProficientWith(context.Source, attackWeapon)
+end
+
+function WM55_CanUseMasteryOnAttack(weaponGroups)
+    local attackWeapon = WM55_GetAttackWeapon()
+
+    return WM55_IsWeaponAttack()
+        & WM55_IsProficientWithAttackWeapon()
+        & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
+end
+
+function WM55_AttackAbilityModifier()
+    local hitDescription = context.HitDescription
+
+    if hitDescription == nil or context.Source == nil then
+        return 0
+    end
+
+    local attackAbility = hitDescription.AttackAbility
+    local source = context.Source
+
+    if attackAbility == Ability.Strength then
+        return GetModifier(source.Strength)
+    elseif attackAbility == Ability.Dexterity then
+        return GetModifier(source.Dexterity)
+    elseif attackAbility == Ability.Constitution then
+        return GetModifier(source.Constitution)
+    elseif attackAbility == Ability.Intelligence then
+        return GetModifier(source.Intelligence)
+    elseif attackAbility == Ability.Wisdom then
+        return GetModifier(source.Wisdom)
+    elseif attackAbility == Ability.Charisma then
+        return GetModifier(source.Charisma)
+    end
+
+    return 0
+end
+
+function WM55_ToppleSaveDC()
+    if context.Source == nil then
+        return 8
+    end
+
+    return 8
+        + context.Source.ProficiencyBonus
+        + WM55_AttackAbilityModifier()
+end
+
+function WM55_TacticalMasterActive()
+    return HasPassive('WM55_TacticalMaster_Push', context.Source)
+        | HasPassive('WM55_TacticalMaster_Sap', context.Source)
+        | HasPassive('WM55_TacticalMaster_Slow', context.Source)
+end
