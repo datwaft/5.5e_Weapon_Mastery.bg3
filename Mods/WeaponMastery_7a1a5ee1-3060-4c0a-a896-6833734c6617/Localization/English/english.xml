@@ -18,4 +18,8 @@
   <content contentuid="hb3efbd4ega6bcg4cd9ga88eg28e6d0397b7a" version="1">When you hit a Large or smaller creature with a proficient Greatclub, Pike, Warhammer, or Heavy Crossbow, push it up to 3 m directly away from you. Toggle this mastery off when you do not want to move your target.</content>
   <content contentuid="hba256668g4bfdg42f9g828cg8058a7693d78" version="1">Graze</content>
   <content contentuid="h577504b5g1fb0g487aga241gb3b74f1a8381" version="1">When you miss with a proficient Glaive or Greatsword, deal damage equal to the non-negative ability modifier used for the attack. The damage has the weapon's damage type and does not trigger effects that require a hit.</content>
+  <content contentuid="h7aa6912egf237g4cd5g9404g80965a9349cc" version="1">Cleave</content>
+  <content contentuid="h49f29118gb717g459eg823bgd43a7c3c644f" version="1">Once per turn, when you hit a creature with a proficient Greataxe or Halberd, you can make another attack against a different creature within 1.5 m of the first target and within your weapon's reach. On a hit, the second attack deals the weapon's damage but does not add a positive ability modifier.</content>
+  <content contentuid="h064343dfg3128g4174gba40gca6872a68b96" version="1">Cleave Attack</content>
+  <content contentuid="h8b70d7dbg9a77g42eagb9afge63af35661e0" version="1">Attack another creature near the target of your triggering attack. On a hit, deal the weapon's damage without adding a positive ability modifier.</content>
 </contentList>

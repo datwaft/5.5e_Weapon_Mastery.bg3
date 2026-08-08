@@ -1,0 +1,5 @@
+new entry "Projectile_WM55_Cleave_Explosion"
+type "SpellData"
+using "Projectile_HordeBreaker_Explosion"
+data "SpellProperties" "AOE:ApplyStatus(WM55_CLEAVE_TARGET,100,1);"
+data "TargetConditions" "not HasStatus('WM55_CLEAVE_TECHNICAL') and not Item();"
