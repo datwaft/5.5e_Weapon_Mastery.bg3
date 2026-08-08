@@ -1,3 +1,7 @@
+new entry "Target_MainHandAttack"
+type "SpellData"
+using "Target_MainHandAttack"
+data "SpellProperties" "GROUND:DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(MainHand);CastOffhand[GROUND:DealDamage(OffhandMeleeWeapon, OffhandMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(OffHand);IF(HasStatus('WM55_NICK_READY',context.Source)):RestoreResource(BonusActionPoint,1);IF(HasStatus('WM55_NICK_READY',context.Source)):ApplyStatus(SELF,WM55_NICK_USED,100,1);IF(HasStatus('WM55_NICK_READY',context.Source) and not HasPassive('DualWielder_PassiveBonuses',context.Source)):ApplyStatus(SELF,WM55_NICK_OFFHAND_BLOCK,100,1);IF(HasStatus('WM55_NICK_READY',context.Source)):RemoveStatus(SELF,WM55_NICK_READY)];IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1);"
 
 new entry "Target_WM55_CleaveAttack"
 type "SpellData"
