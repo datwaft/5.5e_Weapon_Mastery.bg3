@@ -1,3 +1,8 @@
+new entry "Target_WM55_NickMainHandAttack"
+type "SpellData"
+using "Target_MainHandAttack"
+data "DualWieldingUseCosts" "BonusActionPoint:0"
+
 new entry "Target_WM55_CleaveAttack"
 type "SpellData"
 using "Target_HordeBreaker_Free"
