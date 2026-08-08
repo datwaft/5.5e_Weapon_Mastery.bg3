@@ -157,8 +157,10 @@ function WM55_CanTriggerNick()
         & WM55_HasNickOffhandWeapon()
 end
 
-function WM55_TacticalMasterActive()
-    return HasPassive('WM55_TacticalMaster_Push', context.Source)
-        | HasPassive('WM55_TacticalMaster_Sap', context.Source)
-        | HasPassive('WM55_TacticalMaster_Slow', context.Source)
+function WM55_BaseMasteryIsSuppressed()
+    if context.Source == nil then
+        return ConditionResult(false)
+    end
+
+    return HasPassive('WM55_Override_BaseMastery', context.Source)
 end
