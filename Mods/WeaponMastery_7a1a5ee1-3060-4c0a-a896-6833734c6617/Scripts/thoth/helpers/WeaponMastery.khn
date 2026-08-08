@@ -1,25 +1,21 @@
-function WM55_GetAttackWeapon()
-    local hitDescription = context.HitDescription
-
-    if hitDescription ~= nil then
-        local thrownObject = hitDescription.ThrownObject
-
-        if thrownObject ~= nil and thrownObject.IsValid then
-            return thrownObject
-        end
-    end
-
-    return GetAttackWeapon(context.Source)
-end
-
-function WM55_IsThrownWeaponAttack()
+function WM55_GetThrownWeapon()
     local hitDescription = context.HitDescription
 
     if hitDescription == nil then
-        return ConditionResult(false)
+        return nil
     end
 
     local thrownObject = hitDescription.ThrownObject
+
+    if thrownObject == nil or not thrownObject.IsValid then
+        return nil
+    end
+
+    return thrownObject
+end
+
+function WM55_IsThrownWeaponAttack()
+    local thrownObject = WM55_GetThrownWeapon()
 
     if thrownObject == nil or not thrownObject.IsValid then
         return ConditionResult(false)
@@ -29,9 +25,26 @@ function WM55_IsThrownWeaponAttack()
         & HasWeaponProperty(WeaponProperties.Thrown, thrownObject)
 end
 
-function WM55_IsWeaponAttack()
+function WM55_GetAttackWeapon()
+    if WM55_IsThrownWeaponAttack().Result then
+        return WM55_GetThrownWeapon()
+    end
+
+    return GetAttackWeapon(context.Source)
+end
+
+function WM55_IsMeleeAttackMode()
+    return IsMeleeWeaponAttack()
+end
+
+function WM55_IsRangedAttackMode()
     return IsRangedWeaponAttack()
-        | IsMeleeWeaponAttack()
+        & ~WM55_IsThrownWeaponAttack()
+end
+
+function WM55_IsWeaponAttack()
+    return WM55_IsMeleeAttackMode()
+        | WM55_IsRangedAttackMode()
         | WM55_IsThrownWeaponAttack()
 end
 
@@ -136,7 +149,7 @@ function WM55_CanTriggerNick()
     end
 
     return WM55_IsWeaponAttack()
-        & IsMeleeWeaponAttack()
+        & WM55_IsMeleeAttackMode()
         & IsMainHandAttack()
         & IsProficientWith(context.Source, attackWeapon)
         & WM55_HasMasteryAccess(attackWeapon)
