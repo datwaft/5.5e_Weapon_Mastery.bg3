@@ -1,0 +1,124 @@
+Version 1
+SubGoalCombiner SGC_AND
+
+INITSECTION
+
+KBSECTION
+
+// Record the bonus-action value before a normal main-hand attack starts.
+IF
+UsingSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+AND
+HasPassive(_Caster, "WM55_Known_Nick", 1)
+AND
+GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPoints)
+THEN
+DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
+
+// WM55_NICK_READY is applied by the Nick passive during the main-hand attack.
+// A lower bonus-action value means that BG3 also performed its automatic
+// off-hand attack. Nick refunds that cost and records the automatic sequence.
+IF
+StatusApplied(_Caster, "WM55_NICK_READY", _, _StoryActionID)
+AND
+DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
+AND
+GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
+AND
+_BonusActionPointsAfter < _BonusActionPointsBefore
+THEN
+ApplyStatus(_Caster, "WM55_NICK_AUTOMATIC_REFUND", 6.0, 1, _Caster);
+RemoveStatus(_Caster, "WM55_NICK_READY", _Caster);
+ApplyStatus(_Caster, "WM55_NICK_USED", 6.0, 1, _Caster);
+NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore);
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, 0);
+
+// No bonus action was spent, so this was a normal main-hand-only attack.
+IF
+StatusApplied(_Caster, "WM55_NICK_READY", _, _StoryActionID)
+AND
+DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
+AND
+GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
+AND
+_BonusActionPointsAfter >= _BonusActionPointsBefore
+THEN
+NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore);
+
+// Count the attacks that belong to the automatic dual-wield sequence. The
+// second attack is the off-hand attack, so block later off-hand attacks before
+// the action bar refreshes.
+IF
+AttackedBy(_, _AttackOwner, _, _, _, _, _StoryActionID)
+AND
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _CompletedAttacks)
+AND
+IntegerSum(_CompletedAttacks, 1, _NewCompletedAttacks)
+THEN
+NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _CompletedAttacks);
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _NewCompletedAttacks);
+
+IF
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
+AND
+_CompletedAttacks >= 2
+AND
+HasPassive(_Caster, "DualWielder_PassiveBonuses", 0)
+AND
+HasActiveStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 0)
+THEN
+ApplyStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 6.0, 1, _Caster);
+
+// CastedSpell is the fallback for misses and other sequences that do not emit
+// two AttackedBy events. These three cases are mutually exclusive, which lets
+// each case clean up its own automatic-attack fact safely.
+IF
+CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+AND
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
+AND
+HasPassive(_Caster, "DualWielder_PassiveBonuses", 0)
+AND
+HasActiveStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 0)
+THEN
+ApplyStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 6.0, 1, _Caster);
+NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
+
+IF
+CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+AND
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
+AND
+HasPassive(_Caster, "DualWielder_PassiveBonuses", 0)
+AND
+HasActiveStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 1)
+THEN
+NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
+
+IF
+CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+AND
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
+AND
+HasPassive(_Caster, "DualWielder_PassiveBonuses", 1)
+THEN
+NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
+
+// Discard incomplete state for this character when its next turn begins.
+IF
+TurnStarted(_Caster)
+AND
+DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints)
+THEN
+NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
+
+IF
+TurnStarted(_Caster)
+AND
+DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
+THEN
+NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
+
+EXITSECTION
+
+ENDEXITSECTION
