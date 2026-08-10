@@ -7,7 +7,7 @@ KBSECTION
 
 // Record the bonus-action value before a normal main-hand attack starts.
 IF
-UsingSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+UsingSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
 AND
 HasPassive(_Caster, "WM55_Known_Nick", 1)
 AND
@@ -19,7 +19,7 @@ DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
 // A lower bonus-action value means that BG3 also performed its automatic
 // off-hand attack. Nick refunds that cost and records the automatic sequence.
 IF
-StatusApplied(_Caster, "WM55_NICK_READY", _, _StoryActionID)
+StatusApplied((CHARACTER)_Caster, "WM55_NICK_READY", _, _StoryActionID)
 AND
 DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
 AND
@@ -35,7 +35,7 @@ DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, 0);
 
 // No bonus action was spent, so this was a normal main-hand-only attack.
 IF
-StatusApplied(_Caster, "WM55_NICK_READY", _, _StoryActionID)
+StatusApplied((CHARACTER)_Caster, "WM55_NICK_READY", _, _StoryActionID)
 AND
 DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
 AND
@@ -49,7 +49,7 @@ NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoin
 // second attack is the off-hand attack, so block later off-hand attacks before
 // the action bar refreshes.
 IF
-AttackedBy(_, _AttackOwner, _, _, _, _, _StoryActionID)
+AttackedBy(_, (CHARACTER)_AttackOwner, _, _, _, _, _StoryActionID)
 AND
 DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _CompletedAttacks)
 AND
@@ -73,7 +73,7 @@ ApplyStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 6.0, 1, _Caster);
 // two AttackedBy events. These three cases are mutually exclusive, which lets
 // each case clean up its own automatic-attack fact safely.
 IF
-CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
 AND
 DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
 AND
@@ -85,7 +85,7 @@ ApplyStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 6.0, 1, _Caster);
 NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
 IF
-CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
 AND
 DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
 AND
@@ -96,7 +96,7 @@ THEN
 NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
 IF
-CastedSpell(_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
 AND
 DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
 AND
@@ -106,14 +106,14 @@ NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
 // Discard incomplete state for this character when its next turn begins.
 IF
-TurnStarted(_Caster)
+TurnStarted((CHARACTER)_Caster)
 AND
 DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints)
 THEN
 NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
 
 IF
-TurnStarted(_Caster)
+TurnStarted((CHARACTER)_Caster)
 AND
 DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
 THEN
