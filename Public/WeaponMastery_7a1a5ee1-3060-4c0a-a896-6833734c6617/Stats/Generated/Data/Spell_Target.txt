@@ -1,3 +1,9 @@
+new entry "Target_WM55_NickMainHandAttack"
+type "SpellData"
+using "Target_MainHandAttack"
+data "SpellProperties" "GROUND:DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(MainHand);CastOffhand[GROUND:DealDamage(OffhandMeleeWeapon, OffhandMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(OffHand);RemoveStatus(SELF,WM55_NICK_READY);ApplyStatus(SELF,WM55_NICK_USED,100,1)];IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1);"
+data "DualWieldingUseCosts" "BonusActionPoint:0"
+
 new entry "Target_WM55_CleaveAttack"
 type "SpellData"
 using "Target_HordeBreaker_Free"
