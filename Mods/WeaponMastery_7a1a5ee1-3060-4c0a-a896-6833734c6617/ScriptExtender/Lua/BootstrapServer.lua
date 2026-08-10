@@ -96,6 +96,20 @@ Ext.Osiris.RegisterListener("StartAttack", 4, "after", function (defender, attac
 end)
 
 Ext.Osiris.RegisterListener("AttackedBy", 7, "after", function (defender, attackOwner, attacker, damageType, damageAmount, damageCause, storyActionId)
+    local pendingAttack = pendingMainHandAttacks[storyActionId]
+
+    if pendingAttack ~= nil
+        and pendingAttack.character == attackOwner
+        and pendingAttack.usesNick then
+        pendingAttack.completedAttacks = pendingAttack.completedAttacks + 1
+
+        if pendingAttack.completedAttacks >= 2
+            and Osi.HasPassive(attackOwner, "DualWielder_PassiveBonuses") == 0 then
+            Osi.ApplyStatus(attackOwner, NICK_OFFHAND_BLOCK, 6.0, 1, attackOwner)
+            pendingAttack.offhandBlocked = true
+        end
+    end
+
     logEvent(
         "AttackedBy",
         attackOwner,
@@ -133,6 +147,7 @@ Ext.Osiris.RegisterListener("CastedSpell", 5, "after", function (caster, spell, 
     if pendingAttack ~= nil
         and pendingAttack.character == caster
         and pendingAttack.usesNick
+        and not pendingAttack.offhandBlocked
         and Osi.HasPassive(caster, "DualWielder_PassiveBonuses") == 0 then
         Osi.ApplyStatus(caster, NICK_OFFHAND_BLOCK, 6.0, 1, caster)
     end
@@ -159,6 +174,7 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function (object, statu
                 Osi.RemoveStatus(object, NICK_READY, object)
                 Osi.ApplyStatus(object, NICK_USED, 6.0, 1, object)
                 pendingAttack.usesNick = true
+                pendingAttack.completedAttacks = 0
             else
                 pendingMainHandAttacks[storyActionId] = nil
             end
