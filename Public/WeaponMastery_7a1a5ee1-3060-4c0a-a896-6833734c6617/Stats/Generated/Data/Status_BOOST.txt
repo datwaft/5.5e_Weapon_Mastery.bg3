@@ -81,7 +81,7 @@ data "RemoveConditions" "(IsOffHandAttack() and SpellId('Target_OffhandAttack'))
 data "RemoveEvents" "OnAttack;OnEquip;OnUnequip"
 data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;NonExtendable"
 data "StatusGroups" "SG_RemoveOnRespec"
-data "OnRemoveFunctors" "IF(IsOffHandAttack() and SpellId('Target_OffhandAttack')):ApplyStatus(SELF,WM55_NICK_USED,100,1);IF(IsOffHandAttack() and SpellId('Target_OffhandAttack') and not HasPassive('DualWielder_PassiveBonuses',context.Source)):ApplyStatus(SELF,WM55_NICK_OFFHAND_BLOCK,100,1)"
+data "OnRemoveFunctors" "IF(IsOffHandAttack() and SpellId('Target_OffhandAttack')):ApplyStatus(SELF,WM55_NICK_USED,100,1)"
 
 new entry "WM55_NICK_USED"
 type "StatusData"

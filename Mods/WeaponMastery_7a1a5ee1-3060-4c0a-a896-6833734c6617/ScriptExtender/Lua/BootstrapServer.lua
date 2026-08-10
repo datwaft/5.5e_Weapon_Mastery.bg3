@@ -128,6 +128,15 @@ Ext.Osiris.RegisterListener("CastedSpell", 5, "after", function (caster, spell, 
         string.format("spell=%s type=%s element=%s", tostring(spell), tostring(spellType), tostring(spellElement))
     )
 
+    local pendingAttack = pendingMainHandAttacks[storyActionId]
+
+    if pendingAttack ~= nil
+        and pendingAttack.character == caster
+        and pendingAttack.usesNick
+        and Osi.HasPassive(caster, "DualWielder_PassiveBonuses") == 0 then
+        Osi.ApplyStatus(caster, NICK_OFFHAND_BLOCK, 6.0, 1, caster)
+    end
+
     pendingMainHandAttacks[storyActionId] = nil
 end)
 
@@ -149,9 +158,10 @@ Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function (object, statu
                 Osi.ApplyStatus(object, NICK_AUTOMATIC_REFUND, 6.0, 1, object)
                 Osi.RemoveStatus(object, NICK_READY, object)
                 Osi.ApplyStatus(object, NICK_USED, 6.0, 1, object)
+                pendingAttack.usesNick = true
+            else
+                pendingMainHandAttacks[storyActionId] = nil
             end
-
-            pendingMainHandAttacks[storyActionId] = nil
         end
     end
 
