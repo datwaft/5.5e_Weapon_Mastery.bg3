@@ -1,11 +1,13 @@
 local NICK_PASSIVE = "WM55_Known_Nick"
 local NICK_READY = "WM55_NICK_READY"
 local NICK_USED = "WM55_NICK_USED"
+local NICK_AUTOMATIC_REFUND = "WM55_NICK_AUTOMATIC_REFUND"
 local NICK_OFFHAND_BLOCK = "WM55_NICK_OFFHAND_BLOCK"
 local NULL_UUID = "NULL_00000000-0000-0000-0000-000000000000"
 
 local enabled = false
 local sequence = 0
+local pendingMainHandAttacks = {}
 
 local function isNickCharacter(character)
     return character ~= nil
@@ -49,10 +51,18 @@ local function logEvent(eventName, character, storyActionId, details)
 end
 
 Ext.Osiris.RegisterListener("TurnStarted", 1, "after", function (character)
+    pendingMainHandAttacks = {}
     logEvent("TurnStarted", character, "-", "")
 end)
 
 Ext.Osiris.RegisterListener("UsingSpell", 5, "after", function (caster, spell, spellType, spellElement, storyActionId)
+    if spell == "Target_MainHandAttack" and isNickCharacter(caster) then
+        pendingMainHandAttacks[storyActionId] = {
+            character = caster,
+            bonusActionPoints = Osi.GetActionResourceValuePersonal(caster, "BonusActionPoint", 0)
+        }
+    end
+
     logEvent(
         "UsingSpell",
         caster,
@@ -117,15 +127,34 @@ Ext.Osiris.RegisterListener("CastedSpell", 5, "after", function (caster, spell, 
         storyActionId,
         string.format("spell=%s type=%s element=%s", tostring(spell), tostring(spellType), tostring(spellElement))
     )
+
+    pendingMainHandAttacks[storyActionId] = nil
 end)
 
 local function isNickStatus(status)
     return status == NICK_READY
         or status == NICK_USED
+        or status == NICK_AUTOMATIC_REFUND
         or status == NICK_OFFHAND_BLOCK
 end
 
 Ext.Osiris.RegisterListener("StatusApplied", 4, "after", function (object, status, causee, storyActionId)
+    if status == NICK_READY then
+        local pendingAttack = pendingMainHandAttacks[storyActionId]
+
+        if pendingAttack ~= nil and pendingAttack.character == object then
+            local bonusActionPoints = Osi.GetActionResourceValuePersonal(object, "BonusActionPoint", 0)
+
+            if bonusActionPoints < pendingAttack.bonusActionPoints then
+                Osi.ApplyStatus(object, NICK_AUTOMATIC_REFUND, 6.0, 1, object)
+                Osi.RemoveStatus(object, NICK_READY, object)
+                Osi.ApplyStatus(object, NICK_USED, 6.0, 1, object)
+            end
+
+            pendingMainHandAttacks[storyActionId] = nil
+        end
+    end
+
     if isNickStatus(status) then
         logEvent(
             "StatusApplied",
