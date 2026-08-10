@@ -141,25 +141,6 @@ function WM55_HasNickOffhandWeapon()
         & WM55_HasMasteryAccess(offhandWeapon)
 end
 
-function WM55_CanPrepareNick()
-    if context.Source == nil then
-        return ConditionResult(false)
-    end
-
-    local mainHandWeapon = GetActiveWeapon(context.Source, true)
-
-    if mainHandWeapon == nil or not mainHandWeapon.IsValid then
-        return ConditionResult(false)
-    end
-
-    return WM55_IsMeleeWeapon(mainHandWeapon)
-        & HasWeaponProperty(WeaponProperties.Light, mainHandWeapon)
-        & IsProficientWith(context.Source, mainHandWeapon)
-        & WM55_HasMasteryAccess(mainHandWeapon)
-        & WM55_HasNickOffhandWeapon()
-        & ~WM55_BaseMasteryIsSuppressed()
-end
-
 function WM55_CanTriggerNick()
     local attackWeapon = WM55_GetAttackWeapon()
 
