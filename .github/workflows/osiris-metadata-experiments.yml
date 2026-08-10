@@ -1,0 +1,191 @@
+name: Build Osiris metadata experiments
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: osiris-metadata-experiments-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LSLIB_VERSION: v1.20.4
+  LSLIB_SHA256: 5e02368fb8acafda9b45acba37a3f3bf507fc3d65a083a159abbeab06337190e
+  MODULE_FOLDER: WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617
+
+jobs:
+  build:
+    name: Build isolated metadata variants
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Download pinned LSLib
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $archive = Join-Path $env:RUNNER_TEMP "ExportTool-$env:LSLIB_VERSION.zip"
+          $url = "https://github.com/Norbyte/lslib/releases/download/$env:LSLIB_VERSION/ExportTool-$env:LSLIB_VERSION.zip"
+          Invoke-WebRequest -Uri $url -OutFile $archive
+
+          $actualHash = (Get-FileHash -Path $archive -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($actualHash -ne $env:LSLIB_SHA256) {
+            throw "LSLib checksum mismatch. Expected $env:LSLIB_SHA256, got $actualHash."
+          }
+
+          Expand-Archive -Path $archive -DestinationPath (Join-Path $env:RUNNER_TEMP "lslib")
+
+      - name: Build experiment packages
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          function Remove-ModuleAttribute {
+            param([System.Xml.XmlElement]$ModuleInfo, [string]$Id)
+
+            $attribute = $ModuleInfo.SelectSingleNode("attribute[@id='$Id']")
+            if ($null -ne $attribute) {
+              [void]$ModuleInfo.RemoveChild($attribute)
+            }
+          }
+
+          function Remove-ModuleChild {
+            param([System.Xml.XmlElement]$ModuleInfo, [string]$Id)
+
+            $child = $ModuleInfo.SelectSingleNode("children/node[@id='$Id']")
+            if ($null -ne $child) {
+              [void]$child.ParentNode.RemoveChild($child)
+            }
+          }
+
+          $variants = @(
+            [pscustomobject]@{ Name = "control-working"; Change = "Current repository state" },
+            [pscustomobject]@{ Name = "control-pre-toolkit"; Change = "Remove all Toolkit additions" },
+            [pscustomobject]@{ Name = "gui-metadata-only"; Change = "Keep GUI/metadata.lsf but restore the previous meta.lsx fields" },
+            [pscustomobject]@{ Name = "no-gui-metadata"; Change = "Remove GUI/metadata.lsf" },
+            [pscustomobject]@{ Name = "no-file-size"; Change = "Remove ModuleInfo/FileSize" },
+            [pscustomobject]@{ Name = "empty-md5"; Change = "Restore the empty ModuleInfo/MD5" },
+            [pscustomobject]@{ Name = "previous-module-version"; Change = "Restore the previous ModuleInfo/Version64" },
+            [pscustomobject]@{ Name = "no-publish-version"; Change = "Remove ModuleInfo/PublishVersion" },
+            [pscustomobject]@{ Name = "no-scripts"; Change = "Remove ModuleInfo/Scripts" },
+            [pscustomobject]@{ Name = "no-script-1953f77d"; Change = "Remove only Script 1953f77d-a201-45d7-a194-9b84c34b8461" },
+            [pscustomobject]@{ Name = "no-script-0d6510f5"; Change = "Remove only Script 0d6510f5-50a3-4ecd-83d8-134c9a640324" }
+          )
+
+          $divine = Join-Path $env:RUNNER_TEMP "lslib/Packed/Tools/Divine.exe"
+          $outputDirectory = Join-Path $PWD "dist/osiris-metadata-experiments"
+          New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
+
+          foreach ($variant in $variants) {
+            $packageRoot = Join-Path $env:RUNNER_TEMP "osiris-metadata-$($variant.Name)"
+            New-Item -ItemType Directory -Path $packageRoot -Force | Out-Null
+            Copy-Item -Path "Mods" -Destination $packageRoot -Recurse
+            Copy-Item -Path "Public" -Destination $packageRoot -Recurse
+
+            $moduleRoot = Join-Path $packageRoot "Mods/$env:MODULE_FOLDER"
+            $metaPath = Join-Path $moduleRoot "meta.lsx"
+            [xml]$meta = Get-Content -LiteralPath $metaPath -Raw
+            $moduleInfo = $meta.SelectSingleNode("//node[@id='ModuleInfo']")
+            if ($null -eq $moduleInfo) {
+              throw "ModuleInfo is missing from $metaPath."
+            }
+
+            switch ($variant.Name) {
+              "control-pre-toolkit" {
+                Remove-Item -LiteralPath (Join-Path $moduleRoot "GUI/metadata.lsf")
+                Remove-ModuleAttribute $moduleInfo "FileSize"
+                $moduleInfo.SelectSingleNode("attribute[@id='MD5']").SetAttribute("value", "")
+                $moduleInfo.SelectSingleNode("attribute[@id='Version64']").SetAttribute("value", "36028797018963968")
+                Remove-ModuleChild $moduleInfo "PublishVersion"
+                Remove-ModuleChild $moduleInfo "Scripts"
+              }
+              "gui-metadata-only" {
+                Remove-ModuleAttribute $moduleInfo "FileSize"
+                $moduleInfo.SelectSingleNode("attribute[@id='MD5']").SetAttribute("value", "")
+                $moduleInfo.SelectSingleNode("attribute[@id='Version64']").SetAttribute("value", "36028797018963968")
+                Remove-ModuleChild $moduleInfo "PublishVersion"
+                Remove-ModuleChild $moduleInfo "Scripts"
+              }
+              "no-gui-metadata" {
+                Remove-Item -LiteralPath (Join-Path $moduleRoot "GUI/metadata.lsf")
+              }
+              "no-file-size" {
+                Remove-ModuleAttribute $moduleInfo "FileSize"
+              }
+              "empty-md5" {
+                $moduleInfo.SelectSingleNode("attribute[@id='MD5']").SetAttribute("value", "")
+              }
+              "previous-module-version" {
+                $moduleInfo.SelectSingleNode("attribute[@id='Version64']").SetAttribute("value", "36028797018963968")
+              }
+              "no-publish-version" {
+                Remove-ModuleChild $moduleInfo "PublishVersion"
+              }
+              "no-scripts" {
+                Remove-ModuleChild $moduleInfo "Scripts"
+              }
+              "no-script-1953f77d" {
+                $script = $moduleInfo.SelectSingleNode("children/node[@id='Scripts']/children/node[@id='Script'][attribute[@id='UUID' and @value='1953f77d-a201-45d7-a194-9b84c34b8461']]")
+                if ($null -eq $script) {
+                  throw "Script 1953f77d-a201-45d7-a194-9b84c34b8461 is missing."
+                }
+                [void]$script.ParentNode.RemoveChild($script)
+              }
+              "no-script-0d6510f5" {
+                $script = $moduleInfo.SelectSingleNode("children/node[@id='Scripts']/children/node[@id='Script'][attribute[@id='UUID' and @value='0d6510f5-50a3-4ecd-83d8-134c9a640324']]")
+                if ($null -eq $script) {
+                  throw "Script 0d6510f5-50a3-4ecd-83d8-134c9a640324 is missing."
+                }
+                [void]$script.ParentNode.RemoveChild($script)
+              }
+            }
+
+            if ($variant.Name -notin @("control-working", "no-gui-metadata")) {
+              Set-Content -LiteralPath $metaPath -Value $meta.OuterXml -Encoding utf8NoBOM -NoNewline
+            }
+
+            $package = Join-Path $outputDirectory "$($variant.Name).pak"
+            & $divine -g bg3 -a create-package -s $packageRoot -d $package -c lz4hc
+            if ($LASTEXITCODE -ne 0) {
+              throw "Divine failed to create $($variant.Name).pak."
+            }
+
+            $listing = & $divine -g bg3 -a list-package -s $package
+            if ($LASTEXITCODE -ne 0) {
+              throw "Divine failed to verify $($variant.Name).pak."
+            }
+            $paths = $listing | ForEach-Object {
+              (($_ -split "`t")[0]) -replace '\\', '/'
+            }
+            foreach ($requiredPath in @(
+              "Mods/$env:MODULE_FOLDER/meta.lsx",
+              "Mods/$env:MODULE_FOLDER/Story/RawFiles/Goals/WM55_Nick.txt"
+            )) {
+              if ($requiredPath -notin $paths) {
+                throw "$($variant.Name).pak is missing $requiredPath."
+              }
+            }
+
+            $hash = (Get-FileHash -Path $package -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($variant.Name).pak" | Set-Content -Path "$package.sha256"
+          }
+
+          $variants | ConvertTo-Json | Set-Content -Path (Join-Path $outputDirectory "variants.json")
+
+      - name: Upload experiment packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: osiris-metadata-experiments
+          path: dist/osiris-metadata-experiments
+          if-no-files-found: error
+          retention-days: 14
