@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <save>
-    <version major="4" minor="8" revision="0" build="500"/>
-    <region id="ProgressionDescriptions">
-        <node id="root">
-            <children>
-                <node id="ProgressionDescription">
-                    <attribute id="Description" type="TranslatedString" handle="hb53793e2gda95g43b8g8300gf7b46bcbe2a8" version="1"/>
-                    <attribute id="DisplayName" type="TranslatedString" handle="h9e26e03cgfdecg4eeagadacg02d5fb4eb9b9" version="1"/>
-                    <attribute id="SelectorId" type="FixedString" value="WeaponMasteries"/>
-                    <attribute id="UUID" type="guid" value="842ca15b-6802-4169-8111-5d84d502c237"/>
-                </node>
-            </children>
+  <version major="4" minor="8" revision="0" build="500"/>
+  <region id="ProgressionDescriptions">
+    <node id="root">
+      <children>
+        <node id="ProgressionDescription">
+          <attribute id="Description" type="TranslatedString" handle="hb53793e2gda95g43b8g8300gf7b46bcbe2a8" version="1"/>
+          <attribute id="DisplayName" type="TranslatedString" handle="h9e26e03cgfdecg4eeagadacg02d5fb4eb9b9" version="1"/>
+          <attribute id="SelectorId" type="FixedString" value="WeaponMasteries"/>
+          <attribute id="UUID" type="guid" value="842ca15b-6802-4169-8111-5d84d502c237"/>
         </node>
-    </region>
+      </children>
+    </node>
+  </region>
 </save>
