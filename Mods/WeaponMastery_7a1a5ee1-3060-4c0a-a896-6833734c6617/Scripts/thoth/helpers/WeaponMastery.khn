@@ -84,6 +84,16 @@ function WM55_CanUseMasteryOnAttack(weaponGroups)
   & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
   end
 
+function WM55_ToppleStrengthSaveDC()
+  if context.Source == nil then
+    return 8
+    end
+
+  return 8
+  + context.Source.ProficiencyBonus
+  + GetModifier(context.Source.Strength)
+  end
+
 function WM55_HasNickOffhandWeapon()
   if context.Source == nil then
     return ConditionResult(false)
