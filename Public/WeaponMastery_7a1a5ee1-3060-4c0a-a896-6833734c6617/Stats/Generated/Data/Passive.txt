@@ -36,7 +36,7 @@ new entry "WM55_Known_Topple"
   data "Properties" "Highlighted"
   data "StatsFunctorContext" "OnDamage"
   data "Conditions" "WM55_CanUseMasteryOnAttack('Quarterstaffs|Battleaxes|Mauls|Tridents') and HasDamageEffectFlag(DamageFlags.Hit) and not IsKillingBlow() and not WM55_BaseMasteryIsSuppressed() and not Item() and not Self();"
-  data "StatsFunctors" "IF(WeaponAttackRollAbility(Ability.Strength)):UseSpell(Target_Bash,true,true,true)"
+  data "StatsFunctors" "IF(WeaponAttackRollAbility(Ability.Strength)):CreateExplosion(Projectile_WM55_ToppleRoll_Strength);IF(WeaponAttackRollAbility(Ability.Dexterity)):CreateExplosion(Projectile_WM55_ToppleRoll_Dexterity);IF(WeaponAttackRollAbility(Ability.Constitution)):CreateExplosion(Projectile_WM55_ToppleRoll_Constitution);IF(WeaponAttackRollAbility(Ability.Intelligence)):CreateExplosion(Projectile_WM55_ToppleRoll_Intelligence);IF(WeaponAttackRollAbility(Ability.Wisdom)):CreateExplosion(Projectile_WM55_ToppleRoll_Wisdom);IF(WeaponAttackRollAbility(Ability.Charisma)):CreateExplosion(Projectile_WM55_ToppleRoll_Charisma)"
   data "TooltipSave" "Constitution"
 
 new entry "WM55_Known_Push"
