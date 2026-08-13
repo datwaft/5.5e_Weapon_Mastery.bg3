@@ -36,7 +36,7 @@ new entry "WM55_Known_Topple"
   data "Properties" "Highlighted"
   data "StatsFunctorContext" "OnDamage"
   data "Conditions" "WM55_CanUseMasteryOnAttack('Quarterstaffs|Battleaxes|Mauls|Tridents') and HasDamageEffectFlag(DamageFlags.Hit) and not IsKillingBlow() and not WM55_BaseMasteryIsSuppressed() and not Item() and not Self();"
-  data "StatsFunctors" "IF(not SavingThrow(Ability.Constitution,SourceSpellDC(10,context.Source,context.HitDescription.AttackAbility))):ApplyStatus(PRONE,100,1)"
+  data "StatsFunctors" "ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,SourceSpellDC(10,context.Source,context.HitDescription.AttackAbility)))"
   data "TooltipSave" "Constitution"
 
 new entry "WM55_Known_Push"
