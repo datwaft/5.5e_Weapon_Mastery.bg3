@@ -18,8 +18,6 @@ new entry "WM55_VEX_OWNER"
   data "StackId" "WM55_VEX_OWNER"
   data "TickType" "EndTurn"
   data "Boosts" "IF(HasStatus('WM55_VEX_TARGET',context.Target,context.Source)):Advantage(AttackRoll);"
-  data "RemoveConditions" "HasStatus('WM55_VEX_TARGET',context.Target,context.Source)"
-  data "RemoveEvents" "OnAttack"
   data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator;TickingWithSource"
   data "StatusGroups" "SG_RemoveOnRespec"
 
