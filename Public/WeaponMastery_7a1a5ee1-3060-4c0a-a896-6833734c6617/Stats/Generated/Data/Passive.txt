@@ -36,7 +36,7 @@ new entry "WM55_Known_Topple"
   data "Properties" "Highlighted"
   data "StatsFunctorContext" "OnDamage"
   data "Conditions" "WM55_CanUseMasteryOnAttack('Quarterstaffs|Battleaxes|Mauls|Tridents') and HasDamageEffectFlag(DamageFlags.Hit) and not IsKillingBlow() and not WM55_BaseMasteryIsSuppressed() and not Item() and not Self();"
-  data "StatsFunctors" "IF(WeaponAttackRollAbility(Ability.Strength)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+StrengthModifier));IF(WeaponAttackRollAbility(Ability.Dexterity)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+DexterityModifier));IF(WeaponAttackRollAbility(Ability.Constitution)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+ConstitutionModifier));IF(WeaponAttackRollAbility(Ability.Intelligence)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+IntelligenceModifier));IF(WeaponAttackRollAbility(Ability.Wisdom)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+WisdomModifier));IF(WeaponAttackRollAbility(Ability.Charisma)):ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,8+ProficiencyBonus+CharismaModifier))"
+  data "StatsFunctors" "ApplyStatus(PRONE,100,1,,,,not SavingThrow(Ability.Constitution,CalculateSpellDC(context.HitDescription.AttackAbility,context.Source)))"
   data "TooltipSave" "Constitution"
 
 new entry "WM55_Known_Push"
