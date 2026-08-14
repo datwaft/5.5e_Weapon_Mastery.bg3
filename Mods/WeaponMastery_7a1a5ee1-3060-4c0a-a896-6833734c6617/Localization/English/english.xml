@@ -12,6 +12,7 @@
   <content contentuid="h3053a4b6ga18cg44a2g8346g1d820164ee37" version="1">When you damage a target with a Club, Javelin, Light Crossbow, or Longbow, reduce its &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by 3 m.</content>
   <content contentuid="h839cda77g23fcg4dcegaa8dg60096d473ac7" version="1">Slowed</content>
   <content contentuid="hf4326f90gc5d0g4d5fgbb5cg2a17a4ce2663" version="1">Movement speed is reduced by 3 m.</content>
+  <content contentuid="h42b39cddg2875g42b4gb0a4gaf09b4d03919" version="1">Mastery</content>
   <content contentuid="ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6" version="1">Topple</content>
   <content contentuid="h0106f460gfbf2g4404ga0edg5786de9ec42b" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or fall &lt;LSTag Tooltip="Prone"&gt;Prone&lt;/LSTag&gt;.</content>
   <content contentuid="h4afd7000g8675g45e1g9521g492620a95197" version="1">Push</content>
