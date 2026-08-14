@@ -10,7 +10,7 @@ The goal is **not** to reproduce every tabletop rule literally. It is to make We
 
 - During level-up, choose the mastery properties available to your class.
 - Use the table below to equip weapons that have the mastery you chose.
-- Most masteries apply automatically. Cleave and Nick let you choose how to use their extra attack, while Push can be configured to run automatically or manually.
+- Most masteries apply automatically. Cleave gives you a follow-up target, Nick follows BG3's native dual-wielding toggle, and Push uses BG3's interrupt system.
 
 ## Requirements
 
@@ -88,14 +88,14 @@ This keeps the system simple and consistent with the rest of the game.
 
 Several tabletop mastery descriptions use wording such as "you can," so their use is technically optional.
 
-In BG3, asking the player whether to apply Graze, Sap, Slow, or Topple after every attack would turn a multiattack turn into a wall of prompts. Push is the only exception: its interrupt can run automatically or manually.
+In BG3, asking the player whether to apply Graze, Sap, Slow, or Topple after every attack would turn a multiattack turn into a wall of prompts. Push is the exception: it uses BG3's interrupt system and is enabled with **Ask** by default. You can leave it as a prompt or set it to run automatically.
 
 The intended behavior is therefore:
 
 - **Cleave**: player chooses the follow-up target
 - **Graze**: automatic
-- **Nick**: player chooses when and where to use the free attack
-- **Push**: automatic by default, with an optional manual interrupt
+- **Nick**: follows the native Dual Wielding toggle; linked attacks can run together, or the free off-hand attack can remain separate
+- **Push**: enabled with **Ask** by default; can be set to automatic
 - **Sap**: automatic
 - **Slow**: automatic
 - **Topple**: automatic
@@ -105,18 +105,26 @@ The rule is simple: effects that are almost always beneficial should work automa
 
 ## How Nick works
 
-Nick uses BG3's existing action UI for this mechanic.
+Nick uses BG3's native Dual Wielding toggle and existing action UI. BG3 provides an off-hand attack after a main-hand attack, and the [Dual Wielding toggle](https://bg3.wiki/wiki/Light_%28weapon_property%29) controls whether the two attacks are linked or made separately.
 
-Normally, dual-wielding Light weapons gives you an off-hand attack that costs a Bonus Action:
+When the native toggle is on, BG3 can link the main-hand and off-hand attacks into one action:
+
+```mermaid
+flowchart TD
+    A["Main-hand Light attack"] -->|Native Dual Wielding toggle ON| B["BG3 performs the off-hand attack"]
+    B -->|Nick refunds the Bonus Action cost| C["Nick used"]
+```
+
+Nick detects the Bonus Action spent by this native linked-attack path, refunds it, and records Nick as used for the turn.
+
+When the native toggle is off, the off-hand attack remains a separate Bonus Action attack:
 
 ```mermaid
 flowchart TD
     A["Main-hand Light attack"] --> B["Off-Hand Attack (Bonus Action)"]
 ```
 
-The off-hand attack uses your Bonus Action.
-
-With Nick:
+With Nick, the separate off-hand attack becomes free:
 
 ```mermaid
 flowchart TD
@@ -124,11 +132,9 @@ flowchart TD
     B -->|Use it whenever you want| C["Light extra attack consumed"]
 ```
 
-With Nick, the off-hand attack becomes free and remains available as a glowing action.
+The free off-hand attack remains available as a glowing action. The mod supports both native toggle modes; it does not replace BG3's dual-wielding behavior.
 
-The mod does **not** automatically combine the main-hand and off-hand attacks into one click.
-
-You can:
+With the native toggle off, you can:
 
 ```mermaid
 flowchart LR
@@ -137,13 +143,15 @@ flowchart LR
     C --> D["Use the free Nick attack on enemy B"]
 ```
 
-The free attack can target a different enemy and does not have to be used immediately.
+The free attack can target a different enemy and does not have to be used immediately. With the native toggle on, BG3 performs the linked off-hand attack as part of the main-hand action instead.
 
-This mirrors the way BG3 presents **Extra Attack**: another attack becomes available, but the player still controls when and where to use it.
+With the native toggle off, this mirrors the way BG3 presents **Extra Attack**: another attack becomes available, but the player still controls when and where to use it. With the toggle on, BG3's linked-action path controls when the off-hand attack occurs.
 
 ### Nick and Dual Wielder
 
 Nick does not normally add an attack. It lets you use the extra off-hand attack granted by the **Light** property without spending a Bonus Action.
+
+The diagrams in this section describe the separate-action path with the native Dual Wielding toggle off. The linked path still uses the same Nick and Dual Wielder accounting.
 
 Therefore, after using Nick:
 
@@ -195,16 +203,16 @@ Attack with the Shortsword:
 ```mermaid
 flowchart LR
     A["Shortsword hit"] --> B["Vex marks the target"]
-    B --> C["Scimitar off-hand attack becomes FREE and glows"]
+    B --> C["Nick makes the Scimitar off-hand attack free"]
 ```
 
-The free Nick attack can target a different enemy and remains a normal, independently targeted weapon attack. You can use it immediately, after moving, after attacking another creature, or after using Cunning Action.
+With the native Dual Wielding toggle off, the Scimitar attack becomes a separate glowing action. It can target a different enemy and remains a normal, independently targeted weapon attack. You can use it immediately, after moving, after attacking another creature, or after using Cunning Action. With the toggle on, BG3 can perform the Scimitar attack as part of the linked action and Nick refunds its Bonus Action cost.
 
 ### Greatsword with Graze
 
 A character who knows **Graze** attacks with a Greatsword and misses.
 
-Instead of turning the miss into a hit, the target automatically takes damage equal to the ability modifier used for the attack.
+Instead of turning the miss into a hit, the target automatically takes damage equal to the ability modifier used for the attack, with a minimum of 0.
 
 A Strength-based attack uses Strength. If another feature makes the weapon attack use a different ability, Graze uses that ability modifier instead.
 
@@ -214,7 +222,7 @@ A character who knows **Push** hits a Large or smaller enemy with a Warhammer.
 
 The enemy is pushed up to 3 m directly away from the attacker.
 
-The effect applies automatically in ordinary combat. This adds a tactical option without adding an extra prompt after every attack.
+The effect uses BG3's interrupt system. With the default **Ask** setting, you can accept or decline the push; setting Push to automatic applies it without a prompt.
 
 ## Known limitations
 
