@@ -228,9 +228,9 @@ The effect uses BG3's interrupt system. With the default **Ask** setting, you ca
 
 ### Weapon tooltips have limited mastery support
 
-The mod includes a tooltip demo for quarterstaffs: full inventory and inspection tooltips show a static **Mastery: Topple** row with a compact, padded version of the existing Topple icon. The demo uses a display-only item passive and does not change the runtime mastery logic. It does not add **Vex**, **Nick**, or other mastery badges to other weapon families.
+The mod includes a tooltip demo for quarterstaffs: full inventory and inspection tooltips show a static **Mastery: Topple** row in the weapon's unscoped magical-properties section, with a compact, padded version of the existing Topple icon. It is not labelled **Main Hand Only** because the mastery applies in either hand. The demo uses a display-only item passive and does not change the runtime mastery logic. It does not add **Vex**, **Nick**, or other mastery badges to other weapon families.
 
-This demo is intentionally limited to the full item tooltip. World-hover tooltips, title-level badges, and generic coverage for child or modded weapons are out of scope. Weapon-record overrides can replace existing `PassivesOnEquip` data, and UI overrides can conflict with tooltip overhaul mods, so broader support remains separate from the combat implementation. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
+This demo is intentionally limited to the full item tooltip. World-hover tooltips, title-level badges, and generic coverage for child or modded weapons are out of scope. The row is not yet merged into the native `Quarterstaff`/`Versatile` property strip; that requires a tooltip UI override because the native item-property list only knows its built-in weapon-property types. Weapon-record overrides can replace existing `PassivesOnEquip` data, and UI overrides can conflict with tooltip overhaul mods, so broader support remains separate from the combat implementation. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
 
 ### Topple's combat-log DC is shown as a resolved value
 
