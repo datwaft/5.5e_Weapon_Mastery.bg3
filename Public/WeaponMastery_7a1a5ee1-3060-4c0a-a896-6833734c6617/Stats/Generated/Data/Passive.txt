@@ -41,8 +41,8 @@ new entry "WM55_Known_Topple"
 
 new entry "WM55_Tooltip_Topple"
   type "PassiveData"
-  data "DisplayName" "h42b39cddg2875g42b4gb0a4gaf09b4d03919;1"
-  data "Description" "hb5e570a2g73d0g4b3bg87c6gca891b6a0552;1"
+  data "DisplayName" "ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6;1"
+  data "Description" "h0106f460gfbf2g4404ga0edg5786de9ec42b;1"
   data "Icon" "WM55_Mastery_Topple"
   data "Properties" "Highlighted"
 
