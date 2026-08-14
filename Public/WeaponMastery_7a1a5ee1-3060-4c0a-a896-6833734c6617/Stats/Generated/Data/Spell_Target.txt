@@ -1,3 +1,11 @@
+new entry "Target_WM55_MainHandAttack_Topple"
+  type "SpellData"
+  using "Target_MainHandAttack"
+  data "Description" "h0106f460gfbf2g4404ga0edg5786de9ec42b;1"
+  data "TooltipAttackSave" "MeleeWeaponAttack;Constitution"
+  data "TooltipStatusApply" "ApplyStatus(PRONE,100,1)"
+  data "TooltipSpellDCAbilities" "Strength;Dexterity"
+
 new entry "Target_WM55_CleaveAttack"
   type "SpellData"
   using "Target_HordeBreaker_Free"

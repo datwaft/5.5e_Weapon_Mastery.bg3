@@ -84,6 +84,25 @@ function WM55_CanUseMasteryOnAttack(weaponGroups)
   & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
   end
 
+function WM55_HasToppleMainHandWeapon()
+  if context.Source == nil then
+    return ConditionResult(false)
+    end
+
+  local mainHandWeapon = GetActiveWeapon(context.Source, true)
+
+  if mainHandWeapon == nil or not mainHandWeapon.IsValid then
+    return ConditionResult(false)
+    end
+
+  return IsWeaponOfProficiencyGroup(
+  'Quarterstaffs|Battleaxes|Mauls|Tridents',
+  mainHandWeapon
+  )
+  & IsProficientWith(context.Source, mainHandWeapon)
+  & WM55_HasMasteryAccess(mainHandWeapon)
+  end
+
 function WM55_AttackAbilityModifier()
   local hitDescription = context.HitDescription
 
