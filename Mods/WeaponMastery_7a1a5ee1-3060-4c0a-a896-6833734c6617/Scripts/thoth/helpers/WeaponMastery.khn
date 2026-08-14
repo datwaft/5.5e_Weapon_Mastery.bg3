@@ -103,6 +103,25 @@ function WM55_HasToppleMainHandWeapon()
   & WM55_HasMasteryAccess(mainHandWeapon)
   end
 
+function WM55_HasToppleOffHandWeapon()
+  if context.Source == nil then
+    return ConditionResult(false)
+    end
+
+  local offHandWeapon = GetActiveWeapon(context.Source, false)
+
+  if offHandWeapon == nil or not offHandWeapon.IsValid then
+    return ConditionResult(false)
+    end
+
+  return IsWeaponOfProficiencyGroup(
+  'Quarterstaffs|Battleaxes|Mauls|Tridents',
+  offHandWeapon
+  )
+  & IsProficientWith(context.Source, offHandWeapon)
+  & WM55_HasMasteryAccess(offHandWeapon)
+  end
+
 function WM55_AttackAbilityModifier()
   local hitDescription = context.HitDescription
 

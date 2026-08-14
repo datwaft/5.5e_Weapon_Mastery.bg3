@@ -15,6 +15,8 @@
   <content contentuid="ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6" version="1">Topple</content>
   <content contentuid="h5e9a4d1cg4f20g4d7ag9b1ag8c6e2f0a3b7d" version="1">Main Hand Attack (Topple)</content>
   <content contentuid="h7c3b1e4ag2d90g4f6aga8b1g5e0c2d7f9a4b" version="1">Make a melee attack with your equipped weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
+  <content contentuid="h2c8f4abcg7d30g4e9bg8a21g6f5c0d9e4b2a" version="1">Off-Hand Attack (Melee) (Topple)</content>
+  <content contentuid="h3a7e1c9bg5d40g4b8ag9f2cg1e6d8a0b4c5f" version="1">Make a melee attack with your off-hand weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
   <content contentuid="h0106f460gfbf2g4404ga0edg5786de9ec42b" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
   <content contentuid="h4afd7000g8675g45e1g9521g492620a95197" version="1">Push</content>
   <content contentuid="hb3efbd4ega6bcg4cd9ga88eg28e6d0397b7a" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Greatclub, Pike, Warhammer, or Heavy Crossbow, you can push the target 3 m away.</content>
