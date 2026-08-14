@@ -228,7 +228,7 @@ The effect uses BG3's interrupt system. With the default **Ask** setting, you ca
 
 ### Weapon tooltips have limited mastery support
 
-The mod includes a tooltip demo for quarterstaffs: full inventory and inspection tooltips show a static **Mastery: Topple** row with the existing Topple icon. The demo uses a display-only item passive and does not change the runtime mastery logic. It does not add **Vex**, **Nick**, or other mastery badges to other weapon families.
+The mod includes a tooltip demo for quarterstaffs: full inventory and inspection tooltips show a static **Mastery: Topple** row with a compact, padded version of the existing Topple icon. The demo uses a display-only item passive and does not change the runtime mastery logic. It does not add **Vex**, **Nick**, or other mastery badges to other weapon families.
 
 This demo is intentionally limited to the full item tooltip. World-hover tooltips, title-level badges, and generic coverage for child or modded weapons are out of scope. Weapon-record overrides can replace existing `PassivesOnEquip` data, and UI overrides can conflict with tooltip overhaul mods, so broader support remains separate from the combat implementation. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
 

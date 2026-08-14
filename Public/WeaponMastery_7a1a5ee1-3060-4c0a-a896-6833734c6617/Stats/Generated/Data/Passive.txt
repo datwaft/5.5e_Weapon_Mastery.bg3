@@ -43,7 +43,7 @@ new entry "WM55_Tooltip_Topple"
   type "PassiveData"
   data "DisplayName" "h42b39cddg2875g42b4gb0a4gaf09b4d03919;1"
   data "Description" "ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6;1"
-  data "Icon" "Action_Topple"
+  data "Icon" "WM55_Mastery_Topple"
   data "Properties" "Highlighted"
 
 new entry "WM55_Known_Push"
