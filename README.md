@@ -1,20 +1,29 @@
 # 5.5e Weapon Mastery
 
-This mod adds the ***Weapon Mastery*** system from D&D 5.5e (2024) to Baldur's Gate 3.
+This mod adds the **Weapon Mastery** system from the 2024 D&D rules (often called 5.5e) to Baldur's Gate 3.
 
-We are adding the 5.5e tabletop _masteries_ to each weapon (e.g. **Vex** on Shortswords, **Nick** on Daggers or **Graze** on Greatswords). The _Weapon Masteries_ can be chosen by classes that have include them in their progression.
+The mod adds the 2024 Weapon Mastery properties to BG3 weapons (for example, **Vex** on Shortswords, **Nick** on Daggers, and **Graze** on Greatswords). Classes can choose the masteries included in their progression.
 
-The goal is **not** to reproduce every tabletop rule literally. The goal is to make Weapon Mastery feel like a feature Larian could have added to BG3: familiar level-up choices, minimal combat interruptions, support for BG3's loot-heavy progression, and actions that use the game's existing UI whenever possible. When having to choose we prefer the _rule of fun_ over fidelity to the tabletop.
+The goal is **not** to reproduce every tabletop rule literally. It is to make Weapon Mastery feel like a feature Larian could have added to BG3: familiar level-up choices, minimal combat interruptions, support for BG3's loot-heavy progression, and actions that use the game's existing UI whenever possible. When we must choose, we prioritize the _rule of fun_ over exact tabletop fidelity.
+
+## Quick start
+
+- Install the mod with your preferred Baldur's Gate 3 mod manager.
+- During level-up, choose the mastery properties available to your class.
+- Use the table below to equip weapons that have the mastery you chose.
+- Most masteries apply automatically. Cleave and Nick let you choose how to use their extra attack, while Push can be configured to run automatically or manually.
 
 ## Requirements
 
-This mod doesn't have any required mods to work with, but it is recommended to use the [Item and Spell Bug Fixes] mod together with this one, as it fixes a lot of abilities to work properly, which helps this mod apply _Masteries_ to those abilities.
+This mod has no required dependencies.
 
-I took particular care to make this mod compatible with any other mod, but incompatibilities may appear.
+We recommend using [Item and Spell Bug Fixes](https://mod.io/g/baldursgate3/m/item-and-spell-bug-fixes) with this mod. It fixes abilities that this mod can then apply masteries to.
+
+The mod is designed to be compatible with other mods, but conflicts are still possible.
 
 ## Weapon Masteries
 
-The mod implements all eight 5.5e _Weapon Masteries_:
+The mod implements all eight 2024 _Weapon Mastery_ properties:
 
 | Mastery | Description |
 | --- | --- |
@@ -27,66 +36,68 @@ The mod implements all eight 5.5e _Weapon Masteries_:
 | **Topple** | When you **hit** with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a **Constitution Saving Throw** or fall **Prone**. |
 | **Vex** | When you damage a target with a Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, gain **Advantage** on your next attack against it. |
 
-## BG3 adaptations
+## How this mod differs from the 2024 rules
 
-There are a few intentional differences from tabletop.
+This mod makes three intentional changes to the tabletop rules to fit BG3.
 
-### You choose mastery properties, not individual weapon kinds
+### You choose mastery properties, not specific weapon types
 
-In tabletop 5.5e, _Weapon Mastery_ normally asks you to master specific weapon kinds.
+In the 2024 rules, _Weapon Mastery_ normally asks you to master specific weapon types.
 
 For example:
 
 - **Dagger**: _Nick_
 - **Rapier**: _Vex_
 
-This mod instead lets you choose the _mastery_ properties themselves:
+This mod lets you choose the _mastery_ properties themselves:
 
 - **Nick**
 - **Vex**
 
-Weapons still keep their canonical _mastery`. Choosing **Vex** does **not** let you put Vex on a Dagger.
+Weapons keep their normal mastery. Choosing **Vex** does **not** give Vex to a Dagger.
 
 > [!NOTE]
-> BG3 revolves heavily around finding and swapping magical weapons. Having a class feature stop working because you found a great Shortsword after choosing Rapier several levels ago would make the tabletop weapon-kind restriction much more annoying here than it is at a table.
+> BG3 revolves heavily around finding and swapping magical weapons. If a class feature stopped working because you found a better Shortsword after choosing Rapier several levels earlier, the tabletop weapon restriction would be more disruptive here than it is at a table.
 
 ### Masteries are level-up choices
 
-Tabletop lets you replace mastered weapon kinds after a Long Rest. This mod does not add a new Long Rest retraining system.
+The 2024 rules let you change your mastered weapon types after a Long Rest. This mod does not add a new Long Rest retraining system.
 
-Weapon Masteries are selected during level-up and remain part of your build until you respec through **Withers**, like other BG3 character-building choices.
+Weapon Masteries are selected during level-up. They remain part of your build until you respec through **Withers**, like other BG3 character-building choices.
 
-This is both simpler and more consistent with the rest of the game.
+This keeps the system simple and consistent with the rest of the game.
 
-### Masteries do not constantly ask for permission
+### Most masteries apply automatically
 
-Several tabletop mastery descriptions use wording such as "you can," making their use technically optional.
+Several tabletop mastery descriptions use wording such as "you can," so their use is technically optional.
 
-In BG3, asking the player whether they want free Graze damage, Sap, Slow, or Topple after every attack would turn a multiattack turn into a wall of reaction prompts. The only exception for this is _Push_, which has an interrupt that can be made automatic or manual.
+In BG3, asking the player whether to apply Graze, Sap, Slow, or Topple after every attack would turn a multiattack turn into a wall of prompts. Push is the only exception: its interrupt can run automatically or manually.
 
 The intended behavior is therefore:
 
 - **Cleave**: player chooses the follow-up target
 - **Graze**: automatic
 - **Nick**: player chooses when and where to use the free attack
-- **Push**: automatic by default, with optional control if useful
+- **Push**: automatic by default, with an optional manual interrupt
 - **Sap**: automatic
 - **Slow**: automatic
 - **Topple**: automatic
 - **Vex**: automatic
 
-The rule is simple: if the mastery is almost always beneficial, it should simply work.
+The rule is simple: effects that are almost always beneficial should work automatically.
 
-## Nick
+## How Nick works
 
-Nick gets special treatment because BG3 already has an excellent UI for this kind of mechanic.
+Nick uses BG3's existing action UI for this mechanic.
 
-Normally, dual wielding Light weapons gives you an off-hand attack that costs a Bonus Action:
+Normally, dual-wielding Light weapons gives you an off-hand attack that costs a Bonus Action:
 
 ```mermaid
 flowchart TD
     A["Main-hand Light attack"] --> B["Off-Hand Attack (Bonus Action)"]
 ```
+
+The off-hand attack uses your Bonus Action.
 
 With Nick:
 
@@ -96,7 +107,9 @@ flowchart TD
     B -->|Use it whenever you want| C["Light extra attack consumed"]
 ```
 
-The mod does **not** automatically bundle the main-hand and off-hand attacks into one click.
+With Nick, the off-hand attack becomes free and remains available as a glowing action.
+
+The mod does **not** automatically combine the main-hand and off-hand attacks into one click.
 
 You can:
 
@@ -107,11 +120,13 @@ flowchart LR
     C --> D["Use the free Nick attack on enemy B"]
 ```
 
+The free attack can target a different enemy and does not have to be used immediately.
+
 This mirrors the way BG3 presents **Extra Attack**: another attack becomes available, but the player still controls when and where to use it.
 
 ### Nick and Dual Wielder
 
-Nick does not normally create an additional attack. It moves the extra attack granted by the **Light** property out of the Bonus Action economy.
+Nick does not normally add an attack. It lets you use the extra off-hand attack granted by the **Light** property without spending a Bonus Action.
 
 Therefore, after using Nick:
 
@@ -123,7 +138,9 @@ flowchart TD
     B -->|Use Nick| C["Off-Hand (disabled)"]
 ```
 
-However, this mod gives BG3's existing **Dual Wielder** feat the important interaction it has with Nick in the 2024 rules:
+Without Dual Wielder, using the free Nick attack consumes the Light-property extra attack.
+
+However, this mod gives BG3's existing **Dual Wielder** feat the interaction it has with Nick in the 2024 rules:
 
 **With Dual Wielder:**
 
@@ -134,15 +151,17 @@ flowchart TD
     C -->|Use the remaining Dual Wielder attack| D["Off-Hand (disabled)"]
 ```
 
+With Dual Wielder, one additional Bonus Action attack remains available after Nick.
+
 This is a deliberate hybrid.
 
-The mod does **not** otherwise convert BG3's Dual Wielder feat into its 5.5e tabletop version. Its normal BG3 behavior, AC bonus, and weapon rules are left unchanged.
+The mod does **not** otherwise convert BG3's Dual Wielder feat into its 2024 tabletop version. Its normal BG3 behavior, AC bonus, and weapon rules are left unchanged.
 
-Only its interaction with Nick is adapted so that Nick + Dual Wielder behaves in the fun and recognizable 5.5e way.
+Only its interaction with Nick is adapted so that Nick + Dual Wielder behaves in the fun and recognizable 2024-rules way.
 
 ## Examples
 
-### Rogue with Vex + Nick
+### Rogue with Vex and Nick
 
 A Rogue chooses:
 
@@ -162,29 +181,27 @@ flowchart LR
     B --> C["Scimitar off-hand attack becomes FREE and glows"]
 ```
 
-You can then move, attack another creature, use Cunning Action, or use the Nick attack immediately.
-
-The Nick attack is still a normal independently targeted weapon attack.
+The free Nick attack can target a different enemy and remains a normal, independently targeted weapon attack. You can use it immediately, after moving, after attacking another creature, or after using Cunning Action.
 
 ### Greatsword with Graze
 
 A character who knows **Graze** attacks with a Greatsword and misses.
 
-Instead of turning the miss into a hit, the target automatically takes damage equal to the modifier that powered that attack.
+Instead of turning the miss into a hit, the target automatically takes damage equal to the ability modifier used for the attack.
 
-A Strength attack uses Strength. If another feature causes the weapon attack to use a different ability, Graze should use that ability instead.
+A Strength-based attack uses Strength. If another feature makes the weapon attack use a different ability, Graze uses that ability modifier instead.
 
 ### Warhammer with Push
 
-A character who knows **Push** hits a Large-or-smaller enemy with a Warhammer.
+A character who knows **Push** hits a Large or smaller enemy with a Warhammer.
 
 The enemy is pushed up to 3 m directly away from the attacker.
 
-The effect is intended to happen automatically in ordinary combat, because Weapon Mastery should add tactical options without adding reaction-dialog tax to every swing.
+The effect applies automatically in ordinary combat. This adds a tactical option without adding an extra prompt after every attack.
 
-## Research and inspiration
+## Design references (supplementary)
 
-Several existing mods were studied while designing this implementation.
+These links are supplementary design references, not required dependencies. They are included for contributors and readers interested in the implementation details.
 
 In particular:
 
