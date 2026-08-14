@@ -1,14 +1,13 @@
 # 5.5e Weapon Mastery
 
-This mod adds the **Weapon Mastery** system from the 2024 D&D rules (often called 5.5e) to Baldur's Gate 3.
+This mod adds the **Weapon Mastery** system from D&D 5.5e to Baldur's Gate 3.
 
-The mod adds the 2024 Weapon Mastery properties to BG3 weapons (for example, **Vex** on Shortswords, **Nick** on Daggers, and **Graze** on Greatswords). Classes can choose the masteries included in their progression.
+The mod adds the 5.5e Weapon Mastery properties to BG3 weapons (for example, **Vex** on Shortswords, **Nick** on Daggers, and **Graze** on Greatswords). Classes can choose the masteries included in their progression.
 
 The goal is **not** to reproduce every tabletop rule literally. It is to make Weapon Mastery feel like a feature Larian could have added to BG3: familiar level-up choices, minimal combat interruptions, support for BG3's loot-heavy progression, and actions that use the game's existing UI whenever possible. When we must choose, we prioritize the _rule of fun_ over exact tabletop fidelity.
 
-## Quick start
+## Usage
 
-- Install the mod with your preferred Baldur's Gate 3 mod manager.
 - During level-up, choose the mastery properties available to your class.
 - Use the table below to equip weapons that have the mastery you chose.
 - Most masteries apply automatically. Cleave and Nick let you choose how to use their extra attack, while Push can be configured to run automatically or manually.
@@ -23,7 +22,7 @@ The mod is designed to be compatible with other mods, but conflicts are still po
 
 ## Weapon Masteries
 
-The mod implements all eight 2024 _Weapon Mastery_ properties:
+The mod implements all eight 5.5e _Weapon Mastery_ properties:
 
 | Mastery | Description |
 | --- | --- |
@@ -36,13 +35,31 @@ The mod implements all eight 2024 _Weapon Mastery_ properties:
 | **Topple** | When you **hit** with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a **Constitution Saving Throw** or fall **Prone**. |
 | **Vex** | When you damage a target with a Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, gain **Advantage** on your next attack against it. |
 
-## How this mod differs from the 2024 rules
+## Class progression
+
+The mod adds Weapon Mastery selectors to Barbarian, Fighter, Paladin, Ranger, and Rogue progression. The numbers below show how many mastery properties the class selects at each class level.
+
+| Class | Weapon access | Class level 1 | Class level 4 | Class level 10 | Total |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Barbarian | Melee weapons | 2 | 1 | 1 | 4 |
+| Fighter | Proficient weapons | 3 | 1 | 1 | 5 |
+| Paladin | Proficient weapons | 2 | — | — | 2 |
+| Ranger | Proficient weapons | 2 | — | — | 2 |
+| Rogue | Proficient weapons | 2 | — | — | 2 |
+
+The level 1 selection is available both to single-class characters and when entering the class through multiclassing. The listed levels are class levels, not total character levels.
+
+All selectors use the same list of eight mastery properties. A mastery only applies when the character is proficient with the weapon, and Barbarian access is limited to melee weapons.
+
+Classes not listed here do not receive a Weapon Mastery selector from this mod.
+
+## How this mod differs from the 5.5e rules
 
 This mod makes three intentional changes to the tabletop rules to fit BG3.
 
 ### You choose mastery properties, not specific weapon types
 
-In the 2024 rules, _Weapon Mastery_ normally asks you to master specific weapon types.
+In 5.5e, _Weapon Mastery_ normally asks you to master specific weapon types.
 
 For example:
 
@@ -61,7 +78,7 @@ Weapons keep their normal mastery. Choosing **Vex** does **not** give Vex to a D
 
 ### Masteries are level-up choices
 
-The 2024 rules let you change your mastered weapon types after a Long Rest. This mod does not add a new Long Rest retraining system.
+The 5.5e rules let you change your mastered weapon types after a Long Rest. This mod does not add a new Long Rest retraining system.
 
 Weapon Masteries are selected during level-up. They remain part of your build until you respec through **Withers**, like other BG3 character-building choices.
 
@@ -140,7 +157,7 @@ flowchart TD
 
 Without Dual Wielder, using the free Nick attack consumes the Light-property extra attack.
 
-However, this mod gives BG3's existing **Dual Wielder** feat the interaction it has with Nick in the 2024 rules:
+However, this mod gives BG3's existing **Dual Wielder** feat the interaction it has with Nick in the 5.5e rules:
 
 **With Dual Wielder:**
 
@@ -155,9 +172,9 @@ With Dual Wielder, one additional Bonus Action attack remains available after Ni
 
 This is a deliberate hybrid.
 
-The mod does **not** otherwise convert BG3's Dual Wielder feat into its 2024 tabletop version. Its normal BG3 behavior, AC bonus, and weapon rules are left unchanged.
+The mod does **not** otherwise convert BG3's Dual Wielder feat into its 5.5e tabletop version. Its normal BG3 behavior, AC bonus, and weapon rules are left unchanged.
 
-Only its interaction with Nick is adapted so that Nick + Dual Wielder behaves in the fun and recognizable 2024-rules way.
+Only its interaction with Nick is adapted so that Nick + Dual Wielder behaves in the fun and recognizable 5.5e way.
 
 ## Examples
 
@@ -198,6 +215,34 @@ A character who knows **Push** hits a Large or smaller enemy with a Warhammer.
 The enemy is pushed up to 3 m directly away from the attacker.
 
 The effect applies automatically in ordinary combat. This adds a tactical option without adding an extra prompt after every attack.
+
+## Known limitations
+
+### Weapon tooltips do not show mastery badges
+
+The mod does not add **Vex**, **Nick**, or other mastery badges to weapon tooltips. Combat determines mastery at runtime from the attack weapon's proficiency group, while tooltip support would require either overriding many weapon records or adding a separate UI integration.
+
+Weapon-record overrides can replace existing `PassivesOnEquip` data and miss child or modded weapons. UI overrides can also conflict with tooltip overhaul mods. We therefore keep tooltip support separate from the combat implementation rather than add fragile coverage to every weapon. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
+
+### Topple's combat-log DC is shown as a resolved value
+
+Topple can appear in the combat log as `DC: 9` instead of a formula such as `Topple's DC: 8 + Proficiency Modifier + Strength Modifier`. The passive-triggered saving throw calculates the correct DC from the attack ability and proficiency, but BG3's combat log displays the resolved value for this roll rather than the formula and mastery name.
+
+The mod keeps this implementation because it produces one saving throw with the correct DC. Attempts to attach a custom name to the roll changed the roll structure or ability metadata instead of changing only the log label.
+
+### Unusual weapon-attack contexts are engine-dependent
+
+The mod applies a mastery when BG3 exposes an eligible weapon attack with a supported proficiency group. Weapon-like spells and attacks with secondary effects can use different engine contexts.
+
+The intended boundary is:
+
+- Apply the mastery to the primary weapon attack.
+- Do not apply it to a secondary area effect or saving throw only because the action uses a weapon.
+- Treat unusual actions as engine-dependent when BG3 does not expose a clear primary weapon attack.
+
+The optional [Item and Spell Bug Fixes](https://mod.io/g/baldursgate3/m/item-and-spell-bug-fixes) mod can broaden which actions BG3 exposes as weapon attacks. It does not change the primary-versus-secondary boundary.
+
+Weapons that use custom or unsupported proficiency groups are not automatically mapped to a mastery. They must use a supported BG3 weapon group or be added explicitly.
 
 ## Design references (supplementary)
 
