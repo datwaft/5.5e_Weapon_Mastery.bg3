@@ -43,6 +43,7 @@ new entry "WM55_Tooltip_Topple"
   type "PassiveData"
   data "DisplayName" "h42b39cddg2875g42b4gb0a4gaf09b4d03919;1"
   data "Description" "hb5e570a2g73d0g4b3bg87c6gca891b6a0552;1"
+  data "TooltipPermanentWarnings" "d2056bf7-4d7b-424f-95be-2492fa52f0bb"
   data "Properties" "Highlighted"
 
 new entry "WM55_Known_Push"
