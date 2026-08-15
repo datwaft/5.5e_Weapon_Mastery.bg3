@@ -84,7 +84,7 @@ function WM55_CanUseMasteryOnAttack(weaponGroups)
   & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
   end
 
-function WM55_HasToppleMainHandWeapon()
+function WM55_HasMasteryMainHandWeapon(weaponGroups)
   if context.Source == nil then
     return ConditionResult(false)
     end
@@ -95,15 +95,12 @@ function WM55_HasToppleMainHandWeapon()
     return ConditionResult(false)
     end
 
-  return IsWeaponOfProficiencyGroup(
-  'Quarterstaffs|Battleaxes|Mauls|Tridents',
-  mainHandWeapon
-  )
+  return IsWeaponOfProficiencyGroup(weaponGroups, mainHandWeapon)
   & IsProficientWith(context.Source, mainHandWeapon)
   & WM55_HasMasteryAccess(mainHandWeapon)
   end
 
-function WM55_HasToppleOffHandWeapon()
+function WM55_HasMasteryOffHandWeapon(weaponGroups)
   if context.Source == nil then
     return ConditionResult(false)
     end
@@ -114,10 +111,7 @@ function WM55_HasToppleOffHandWeapon()
     return ConditionResult(false)
     end
 
-  return IsWeaponOfProficiencyGroup(
-  'Quarterstaffs|Battleaxes|Mauls|Tridents',
-  offHandWeapon
-  )
+  return IsWeaponOfProficiencyGroup(weaponGroups, offHandWeapon)
   & IsProficientWith(context.Source, offHandWeapon)
   & WM55_HasMasteryAccess(offHandWeapon)
   end
