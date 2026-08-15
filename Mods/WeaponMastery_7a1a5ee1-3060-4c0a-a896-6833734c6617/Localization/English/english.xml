@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contentList xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <content contentuid="h7954301bge14ag4fdcg9483g86ba9e4b1a15" version="1">Vex</content>
-  <content contentuid="he4a0e276g77f7g4a24gb651gfc399375381c" version="1">When you damage a target with a Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against it.</content>
-  <content contentuid="he991932dg27c8g4513g8e9fg1d4d1e3724be" version="1">Vexed</content>
-  <content contentuid="h451c78b2g90c9g4a39g8c4eg48f45dd84cd8" version="1">The creature that applied Vex has &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on its next attack against this target.</content>
-  <content contentuid="h38479daag2cdeg4152gb925gdfe2af5ae68b" version="1">Sap</content>
-  <content contentuid="ha20d6c83g87ccg478fg9b63gba69e6a39032" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Mace, Spear, Flail, Longsword, Morningstar, or War Pick, the target gains &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack.</content>
-  <content contentuid="h79c92f2fg94bag4099ga283gfc1db2653249" version="1">Sapped</content>
-  <content contentuid="h1f414980gfb4dg43b0ga329g47759bcf999b" version="1">Has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
-  <content contentuid="hed9e60bag177fg4aafga8a1gb802d679a8fb" version="1">Slow</content>
-  <content contentuid="h3053a4b6ga18cg44a2g8346g1d820164ee37" version="1">When you damage a target with a Club, Javelin, Light Crossbow, or Longbow, reduce its &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by 3 m.</content>
-  <content contentuid="h839cda77g23fcg4dcegaa8dg60096d473ac7" version="1">Slowed</content>
-  <content contentuid="hf4326f90gc5d0g4d5fgbb5cg2a17a4ce2663" version="1">Movement speed is reduced by 3 m.</content>
-  <content contentuid="ha40ee6bbg5500g4fa0gb1dag5f1bcf2d57b6" version="1">Topple</content>
-  <content contentuid="h7c3b1e4ag2d90g4f6aga8b1g5e0c2d7f9a4b" version="1">Make a melee attack with your equipped weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
-  <content contentuid="h3a7e1c9bg5d40g4b8ag9f2cg1e6d8a0b4c5f" version="1">Make a melee attack with your off-hand weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
-  <content contentuid="h10000001g0001g4001g8001g000000000001" version="1">Make a melee attack with your equipped weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
-  <content contentuid="h10000002g0002g4002g8002g000000000002" version="1">Make a melee attack with your off-hand weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
-  <content contentuid="h10000003g0003g4003g8003g000000000003" version="1">Make a ranged attack with your equipped weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
-  <content contentuid="h10000004g0004g4004g8004g000000000004" version="1">Make a ranged attack with your off-hand weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
-  <content contentuid="h10000005g0005g4005g8005g000000000005" version="1">Make a melee attack with your equipped weapon. On a hit, the target has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
-  <content contentuid="h10000006g0006g4006g8006g000000000006" version="1">Make a melee attack with your off-hand weapon. On a hit, the target has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
-  <content contentuid="h10000007g0007g4007g8007g000000000007" version="1">Make a melee attack with your equipped weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
-  <content contentuid="h10000008g0008g4008g8008g000000000008" version="1">Make a melee attack with your off-hand weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
-  <content contentuid="h10000009g0009g4009g8009g000000000009" version="1">Make a ranged attack with your equipped weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
-  <content contentuid="h0106f460gfbf2g4404ga0edg5786de9ec42b" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
-  <content contentuid="h1000000ag000ag400ag800ag00000000000a" version="1">Make a melee attack with your equipped weapon. On a hit, you can push the target 3 m away.</content>
-  <content contentuid="h1000000bg000bg400bg800bg00000000000b" version="1">Make a melee attack with your off-hand weapon. On a hit, you can push the target 3 m away.</content>
-  <content contentuid="h1000000cg000cg400cg800cg00000000000c" version="1">Make a ranged attack with your equipped weapon. On a hit, you can push the target 3 m away.</content>
-  <content contentuid="h1000000dg000dg400dg800dg00000000000d" version="1">Make a melee attack with your equipped weapon. On a miss, deal damage equal to your attack &lt;LSTag Tooltip="AbilityModifier"&gt;Ability Modifier&lt;/LSTag&gt;.</content>
-  <content contentuid="h1000000eg000eg400eg800eg00000000000e" version="1">Make a melee attack with your equipped weapon. Once per turn, on a hit, you can make another attack against a nearby target.</content>
-  <content contentuid="h4afd7000g8675g45e1g9521g492620a95197" version="1">Push</content>
-  <content contentuid="hb3efbd4ega6bcg4cd9ga88eg28e6d0397b7a" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Greatclub, Pike, Warhammer, or Heavy Crossbow, you can push the target 3 m away.</content>
-  <content contentuid="hba256668g4bfdg42f9g828cg8058a7693d78" version="1">Graze</content>
-  <content contentuid="h577504b5g1fb0g487aga241gb3b74f1a8381" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;miss&lt;/LSTag&gt; with a Glaive or Greatsword, deal damage equal to your attack &lt;LSTag Tooltip="AbilityModifier"&gt;Ability Modifier&lt;/LSTag&gt;.</content>
-  <content contentuid="h7aa6912egf237g4cd5g9404g80965a9349cc" version="1">Cleave</content>
-  <content contentuid="h49f29118gb717g459eg823bgd43a7c3c644f" version="1">Once per turn, &lt;LSTag Tooltip="AttackRoll"&gt;hitting&lt;/LSTag&gt; with a Greataxe or Halberd lets you make another attack against a nearby target.</content>
-  <content contentuid="h064343dfg3128g4174gba40gca6872a68b96" version="1">Cleave Attack</content>
-  <content contentuid="h8b70d7dbg9a77g42eagb9afge63af35661e0" version="1">Attack another creature near the target of your triggering attack. On a hit, deal the weapon's damage without adding a positive ability modifier.</content>
-  <content contentuid="heeba2dadg959eg4443gb9b9g1d0f188717c2" version="1">Nick</content>
-  <content contentuid="h1000000fg000fg400fg800fg00000000000f" version="1">Make a melee attack with your off-hand weapon. Once per turn, after you attack with a &lt;LSTag Tooltip="Light"&gt;Light&lt;/LSTag&gt; melee weapon, this attack does not cost a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
-  <content contentuid="h53de0204g5b3fg44f2g9a76g803777b031c2" version="1">Once per turn, &lt;LSTag Tooltip="AttackRoll"&gt;attacking&lt;/LSTag&gt; with a &lt;LSTag Tooltip="Light"&gt;Light&lt;/LSTag&gt; melee weapon while wielding a Dagger, Light Hammer, Sickle, or Scimitar in your off hand lets you make your next off-hand attack without spending a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.&lt;br&gt;&lt;br&gt;&lt;LSTag Type="Passive" Tooltip="DualWielder_PassiveBonuses"&gt;Dual Wielder&lt;/LSTag&gt; still allows an additional off-hand attack using a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
-  <content contentuid="h9e26e03cgfdecg4eeagadacg02d5fb4eb9b9" version="1">Weapon Mastery</content>
-  <content contentuid="hb53793e2gda95g43b8g8300gf7b46bcbe2a8" version="1">Choose mastery properties to use with eligible weapons.</content>
+  <content contentuid="h5dae23c9g85c7g4ed3gb64fgc4599b20ffee" version="1">Vex</content>
+  <content contentuid="hca04555cg9bf5g4138g8f87gd7c3569a33dd" version="1">When you damage a target with a Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against it.</content>
+  <content contentuid="h1cf860e8gb5e0g4096g9a7eg6ee05026a0c5" version="1">Vexed</content>
+  <content contentuid="h85f8db24g2ed9g43d2g81e6g667a63a87c82" version="1">The creature that applied Vex has &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on its next attack against this target.</content>
+  <content contentuid="h06289e63g667cg4260gba36g9930c75c56dd" version="1">Sap</content>
+  <content contentuid="hd2470831gba67g4c8aga334g4e01a556a41e" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Mace, Spear, Flail, Longsword, Morningstar, or War Pick, the target gains &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack.</content>
+  <content contentuid="h9dd02079g494bg4dccg9d66g7d50dd3fe176" version="1">Sapped</content>
+  <content contentuid="hbd791cb8gdbaeg4bbdgb8cfg25f233acd0cd" version="1">Has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
+  <content contentuid="hd8ceefb1g3b68g4e7ag99c5g8ce432ec35da" version="1">Slow</content>
+  <content contentuid="he5854ad1gaf6ag44c9ga454g04117fab8529" version="1">When you damage a target with a Club, Javelin, Light Crossbow, or Longbow, reduce its &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; by 3 m.</content>
+  <content contentuid="h0742850cga3a5g42e2ga62bge27ae8365ae1" version="1">Slowed</content>
+  <content contentuid="h93c0f09eg050eg4fddgb1d0g0a4691d3fc10" version="1">Movement speed is reduced by 3 m.</content>
+  <content contentuid="hf25db953g4588g4bd2g978fgf56d0d5e8d97" version="1">Topple</content>
+  <content contentuid="hab1c48fdg99a2g4c0bg9250g5e65c5b167e2" version="1">Make a melee attack with your equipped weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
+  <content contentuid="h99ff4472g71dbg436bgbbbegc84aa3485f7f" version="1">Make a melee attack with your off-hand weapon. On a hit, the target may fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
+  <content contentuid="h208d5388gf8eag42cdgb2eeg860bdeac15f8" version="1">Make a melee attack with your equipped weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
+  <content contentuid="h74dc4714g3accg4111g8e39gd2fd60a0b194" version="1">Make a melee attack with your off-hand weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
+  <content contentuid="h7d94e7c5gc799g4a51gad9ag2dcf7a58abfc" version="1">Make a ranged attack with your equipped weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
+  <content contentuid="h5302d671g6ab4g474cg8342ge3e5f662f2f6" version="1">Make a ranged attack with your off-hand weapon. On a hit, you gain &lt;LSTag Tooltip="Advantage"&gt;Advantage&lt;/LSTag&gt; on your next attack against the target.</content>
+  <content contentuid="hdb4f9948g03a0g4bd7g83fcg42e0bdbb58fd" version="1">Make a melee attack with your equipped weapon. On a hit, the target has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
+  <content contentuid="hd9af6eeegc58dg44bagbda3g912004373459" version="1">Make a melee attack with your off-hand weapon. On a hit, the target has &lt;LSTag Tooltip="Disadvantage"&gt;Disadvantage&lt;/LSTag&gt; on its next attack roll.</content>
+  <content contentuid="h96554efegab57g405dgaf85ge556c3f1418f" version="1">Make a melee attack with your equipped weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
+  <content contentuid="h5482b27bgf702g4006ga284gf91626d6e01e" version="1">Make a melee attack with your off-hand weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
+  <content contentuid="h91ab3f5fgdb31g4eacg917eg8b09b37e270f" version="1">Make a ranged attack with your equipped weapon. On a hit, the target's &lt;LSTag Tooltip="MovementSpeed"&gt;Movement Speed&lt;/LSTag&gt; is reduced by 3 m.</content>
+  <content contentuid="h38806a67ge675g494ag92fcgd04f5ff1b08b" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a &lt;LSTag Tooltip="Constitution"&gt;Constitution&lt;/LSTag&gt; &lt;LSTag Tooltip="SavingThrow"&gt;Saving Throw&lt;/LSTag&gt; or fall &lt;LSTag Type="Status" Tooltip="PRONE"&gt;Prone&lt;/LSTag&gt;.</content>
+  <content contentuid="h00708053g5923g4ecegbffdga87c82385f27" version="1">Make a melee attack with your equipped weapon. On a hit, you can push the target 3 m away.</content>
+  <content contentuid="h51d1fe73gee76g4159g8a02g1fe58ca20e0b" version="1">Make a melee attack with your off-hand weapon. On a hit, you can push the target 3 m away.</content>
+  <content contentuid="h19a8769cg6698g474ag94c0gbfb94cc30bb3" version="1">Make a ranged attack with your equipped weapon. On a hit, you can push the target 3 m away.</content>
+  <content contentuid="h0f62670ag5322g41d1g895ag8513e0498395" version="1">Make a melee attack with your equipped weapon. On a miss, deal damage equal to your attack &lt;LSTag Tooltip="AbilityModifier"&gt;Ability Modifier&lt;/LSTag&gt;.</content>
+  <content contentuid="ha7ff55d4g4b2fg4304g9087gafc0215cd74c" version="1">Make a melee attack with your equipped weapon. Once per turn, on a hit, you can make another attack against a nearby target.</content>
+  <content contentuid="hcfcaf66bgd3f6g4de4g8a83ge00ca9fed9eb" version="1">Push</content>
+  <content contentuid="h36f9628dg5172g42f4ga763gd4f47fb60cba" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;hit&lt;/LSTag&gt; with a Greatclub, Pike, Warhammer, or Heavy Crossbow, you can push the target 3 m away.</content>
+  <content contentuid="hc1721423g72c8g41c0gb5cbgff5664d3cf2b" version="1">Graze</content>
+  <content contentuid="h4d7682b8gb819g4c48g8a80g45d91d15cb4a" version="1">When you &lt;LSTag Tooltip="AttackRoll"&gt;miss&lt;/LSTag&gt; with a Glaive or Greatsword, deal damage equal to your attack &lt;LSTag Tooltip="AbilityModifier"&gt;Ability Modifier&lt;/LSTag&gt;.</content>
+  <content contentuid="hfb148a44g36e4g4891ga201g7f4d96b91344" version="1">Cleave</content>
+  <content contentuid="h257152bdgeb97g4e0dga52egf5fe2541ec0f" version="1">Once per turn, &lt;LSTag Tooltip="AttackRoll"&gt;hitting&lt;/LSTag&gt; with a Greataxe or Halberd lets you make another attack against a nearby target.</content>
+  <content contentuid="hf3ab914fg4785g4faag8d7dgf41085d7a7aa" version="1">Cleave Attack</content>
+  <content contentuid="hd38c1b3fgf336g44f1g860eg8711d7b3f1af" version="1">Attack another creature near the target of your triggering attack. On a hit, deal the weapon's damage without adding a positive ability modifier.</content>
+  <content contentuid="h15fd87a1gcf90g4a22g9a99ge92af511bc12" version="1">Nick</content>
+  <content contentuid="hd516efb5g2184g418bgbf5aga9836bfe2c1a" version="1">Make a melee attack with your off-hand weapon. Once per turn, after you attack with a &lt;LSTag Tooltip="Light"&gt;Light&lt;/LSTag&gt; melee weapon, this attack does not cost a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
+  <content contentuid="he286e785gaaa1g4c13g9b0dgac35d616bef1" version="1">Once per turn, &lt;LSTag Tooltip="AttackRoll"&gt;attacking&lt;/LSTag&gt; with a &lt;LSTag Tooltip="Light"&gt;Light&lt;/LSTag&gt; melee weapon while wielding a Dagger, Light Hammer, Sickle, or Scimitar in your off hand lets you make your next off-hand attack without spending a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.&lt;br&gt;&lt;br&gt;&lt;LSTag Type="Passive" Tooltip="DualWielder_PassiveBonuses"&gt;Dual Wielder&lt;/LSTag&gt; still allows an additional off-hand attack using a &lt;LSTag Type="ActionResource" Tooltip="BonusActionPoint"&gt;Bonus Action&lt;/LSTag&gt;.</content>
+  <content contentuid="h0dbd8449g47c1g4f0ag90d9g9693fa6035a6" version="1">Weapon Mastery</content>
+  <content contentuid="h6cb587afgdcf3g4f72ga517gf198f6363268" version="1">Choose mastery properties to use with eligible weapons.</content>
 </contentList>
