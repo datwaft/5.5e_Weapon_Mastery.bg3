@@ -5,42 +5,45 @@ INITSECTION
 
 KBSECTION
 
-  // Keep Topple's presentation statuses independent from its OnDamage passive.
+  // Keep attack presentation statuses independent from mastery mechanics.
   PROC
-    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+    PROC_WM55_SyncAttackTooltipStatus((CHARACTER)_Character, (STRING)_Passive, (STRING)_Status)
   AND
-    HasPassive(_Character, "WM55_Known_Topple", 1)
+    HasPassive(_Character, _Passive, 1)
   AND
-    HasActiveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", 0)
+    HasActiveStatus(_Character, _Status, 0)
   THEN
-    ApplyStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
+    ApplyStatus(_Character, _Status, -1.0, 1, _Character);
 
   PROC
-    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+    PROC_WM55_SyncAttackTooltipStatus((CHARACTER)_Character, (STRING)_Passive, (STRING)_Status)
   AND
-    HasPassive(_Character, "WM55_Known_Topple", 1)
+    HasPassive(_Character, _Passive, 0)
   AND
-    HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 0)
+    HasActiveStatus(_Character, _Status, 1)
   THEN
-    ApplyStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
+    RemoveStatus(_Character, _Status, _Character);
 
   PROC
-    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
-  AND
-    HasPassive(_Character, "WM55_Known_Topple", 0)
-  AND
-    HasActiveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", 1)
+    PROC_WM55_RefreshAttackTooltips((CHARACTER)_Character)
   THEN
-    RemoveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", _Character);
-
-  PROC
-    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
-  AND
-    HasPassive(_Character, "WM55_Known_Topple", 0)
-  AND
-    HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 1)
-  THEN
-    RemoveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", _Character);
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_RANGED_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Sap", "WM55_SAP_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Sap", "WM55_SAP_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Topple", "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Topple", "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Graze", "WM55_GRAZE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Cleave", "WM55_CLEAVE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Nick", "WM55_NICK_OFFHAND_ATTACK_OVERRIDE");
 
   // Seed existing saves after all player characters are available.
   IF
@@ -48,34 +51,34 @@ KBSECTION
   AND
     DB_Players((CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
-  // Refresh after the character can gain or lose the Topple passive.
+  // Refresh after characters gain or lose mastery passives.
   IF
     LeveledUp((CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
   IF
     RespecCompleted((CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
   IF
     CharacterJoinedParty((CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
   // Refresh presentation providers after equipment changes.
   IF
     Equipped(_, (CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
   IF
     Unequipped(_, (CHARACTER)_Character)
   THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+    PROC_WM55_RefreshAttackTooltips(_Character);
 
 EXITSECTION
 

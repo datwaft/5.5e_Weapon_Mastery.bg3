@@ -89,15 +89,10 @@ function WM55_HasMasteryMainHandWeapon(weaponGroups)
     return ConditionResult(false)
     end
 
-  local mainHandWeapon = GetActiveWeapon(context.Source, true)
-
-  if mainHandWeapon == nil or not mainHandWeapon.IsValid then
-    return ConditionResult(false)
-    end
-
-  return IsWeaponOfProficiencyGroup(weaponGroups, mainHandWeapon)
-  & IsProficientWith(context.Source, mainHandWeapon)
-  & WM55_HasMasteryAccess(mainHandWeapon)
+  return WM55_IsEligibleMasteryWeapon(
+  weaponGroups,
+  GetActiveWeapon(context.Source, true)
+  )
   end
 
 function WM55_HasMasteryOffHandWeapon(weaponGroups)
@@ -105,15 +100,42 @@ function WM55_HasMasteryOffHandWeapon(weaponGroups)
     return ConditionResult(false)
     end
 
-  local offHandWeapon = GetActiveWeapon(context.Source, false)
+  return WM55_IsEligibleMasteryWeapon(
+  weaponGroups,
+  GetActiveWeapon(context.Source, false)
+  )
+  end
 
-  if offHandWeapon == nil or not offHandWeapon.IsValid then
+function WM55_HasMasteryRangedMainHandWeapon(weaponGroups)
+  if context.Source == nil then
     return ConditionResult(false)
     end
 
-  return IsWeaponOfProficiencyGroup(weaponGroups, offHandWeapon)
-  & IsProficientWith(context.Source, offHandWeapon)
-  & WM55_HasMasteryAccess(offHandWeapon)
+  return WM55_IsEligibleMasteryWeapon(
+  weaponGroups,
+  GetItemInEquipmentSlot(EquipmentSlot.RangedMainHand, context.Source)
+  )
+  end
+
+function WM55_HasMasteryRangedOffHandWeapon(weaponGroups)
+  if context.Source == nil then
+    return ConditionResult(false)
+    end
+
+  return WM55_IsEligibleMasteryWeapon(
+  weaponGroups,
+  GetItemInEquipmentSlot(EquipmentSlot.RangedOffHand, context.Source)
+  )
+  end
+
+function WM55_IsEligibleMasteryWeapon(weaponGroups, weapon)
+  if context.Source == nil or weapon == nil or not weapon.IsValid then
+    return ConditionResult(false)
+    end
+
+  return IsWeaponOfProficiencyGroup(weaponGroups, weapon)
+  & IsProficientWith(context.Source, weapon)
+  & WM55_HasMasteryAccess(weapon)
   end
 
 function WM55_AttackAbilityModifier()
@@ -150,17 +172,11 @@ function WM55_HasNickOffhandWeapon()
 
   local offhandWeapon = GetActiveWeapon(context.Source, false)
 
-  if offhandWeapon == nil or not offhandWeapon.IsValid then
-    return ConditionResult(false)
-    end
-
-  return IsWeaponOfProficiencyGroup(
+  return WM55_IsEligibleMasteryWeapon(
   'Daggers|LightHammers|Sickles|Scimitars',
   offhandWeapon
   )
   & HasWeaponProperty(WeaponProperties.Light, offhandWeapon)
-  & IsProficientWith(context.Source, offhandWeapon)
-  & WM55_HasMasteryAccess(offhandWeapon)
   end
 
 function WM55_CanTriggerNick()
