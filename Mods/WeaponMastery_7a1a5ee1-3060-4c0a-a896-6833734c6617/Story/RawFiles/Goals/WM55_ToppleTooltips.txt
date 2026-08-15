@@ -15,17 +15,14 @@ KBSECTION
   THEN
     ApplyStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
 
-  // Isolate the off-hand experiment from the status-based override.
   PROC
     PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
   AND
     HasPassive(_Character, "WM55_Known_Topple", 1)
   AND
-    HasPassive(_Character, "WM55_Experiment_OffhandAttackOverride", 0)
-  AND
     HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 0)
   THEN
-    AddPassive(_Character, "WM55_Experiment_OffhandAttackOverride");
+    ApplyStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
 
   PROC
     PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
@@ -40,14 +37,6 @@ KBSECTION
     PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
   AND
     HasPassive(_Character, "WM55_Known_Topple", 0)
-  AND
-    HasPassive(_Character, "WM55_Experiment_OffhandAttackOverride", 1)
-  THEN
-    RemovePassive(_Character, "WM55_Experiment_OffhandAttackOverride");
-
-  // Remove the previous provider from existing experimental saves.
-  PROC
-    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
   AND
     HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 1)
   THEN
@@ -74,12 +63,6 @@ KBSECTION
 
   IF
     CharacterJoinedParty((CHARACTER)_Character)
-  THEN
-    PROC_WM55_RefreshToppleAttackTooltips(_Character);
-
-  // Add the passive only after the old status provider is fully gone.
-  IF
-    StatusRemoved((CHARACTER)_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", _, _)
   THEN
     PROC_WM55_RefreshToppleAttackTooltips(_Character);
 
