@@ -10,6 +10,7 @@ The goal is **not** to reproduce every tabletop rule literally. It is to make We
 
 - During level-up, choose the mastery properties available to your class.
 - Use the table below to equip weapons that have the mastery you chose.
+- Check the standard attack action tooltip to see the mastery used by the equipped weapon.
 - Most masteries apply automatically. Cleave gives you a follow-up target, Nick follows BG3's native dual-wielding toggle, and Push uses BG3's interrupt system.
 
 ## Requirements
@@ -18,7 +19,22 @@ This mod has no required dependencies.
 
 We recommend using [Item and Spell Bug Fixes](https://mod.io/g/baldursgate3/m/item-and-spell-bug-fixes) with this mod. It fixes abilities that this mod can then apply masteries to.
 
-The mod is designed to be compatible with other mods, but conflicts are still possible.
+## Compatibility
+
+Mods that identify attacks by their properties should remain compatible. The table shows the expected results for common methods.
+
+| How the other mod identifies an attack | Expected result |
+| --- | --- |
+| It checks attack properties, such as weapon, melee, ranged, main hand, or off hand. | It should work. |
+| It checks whether the attack is a child or variant of a standard BG3 attack. | It should work. |
+| It checks only the exact ID of a standard BG3 attack. | It might not detect the replacement attack. |
+| It also replaces the same standard attack with `AttackSpellOverride`. | The overrides can conflict. |
+
+BG3 gives each attack action a spell ID. This mod uses `AttackSpellOverride` to show the active mastery in the action tooltip. The replacement is a child of the standard BG3 attack, but it has a different ID.
+
+For example, an exact check for `Target_MainHandAttack` or `Target_OffhandAttack` might not detect the replacement. A check for the attack's properties or parent should detect it.
+
+The mod applies an override only when the character knows the mastery and has an eligible weapon in that equipment slot. It does not replace weapon records. The passive system still applies the mastery effect. The replacement spell changes the action description.
 
 ## Weapon Masteries
 
@@ -34,6 +50,19 @@ The mod implements all eight 5.5e _Weapon Mastery_ properties:
 | **Slow** | When you damage a target with a Club, Javelin, Light Crossbow, or Longbow, reduce its **Movement Speed** by 3 m. |
 | **Topple** | When you **hit** with a Quarterstaff, Battleaxe, Maul, or Trident, the target must succeed a **Constitution Saving Throw** or fall **Prone**. |
 | **Vex** | When you damage a target with a Handaxe, Rapier, Shortsword, Shortbow, or Hand Crossbow, gain **Advantage** on your next attack against it. |
+
+## Attack action tooltips
+
+When a character knows a mastery and equips an eligible weapon, the standard attack action describes that mastery. For example, the action for a Topple weapon says that the target may fall **Prone**. The tooltip also shows the Constitution save.
+
+The tooltip follows the weapon in each equipment slot:
+
+- The main-hand and off-hand actions can show different masteries.
+- Melee and ranged actions have separate descriptions where eligible weapons support them.
+- Nick changes only the off-hand action.
+- A mastery for a two-handed weapon appears only on the main-hand action.
+
+The mod does not change the Throw action tooltip. A thrown attack can still apply a mastery when BG3 identifies it as a supported weapon attack.
 
 ## Class progression
 
@@ -226,11 +255,11 @@ The effect uses BG3's interrupt system. With the default **Ask** setting, you ca
 
 ## Known limitations
 
-### Weapon tooltips do not show mastery badges
+### Item tooltips do not show masteries
 
-The mod does not add **Vex**, **Nick**, or other mastery badges to weapon tooltips. Combat determines mastery at runtime from the attack weapon's proficiency group, while tooltip support would require either overriding many weapon records or adding a separate UI integration.
+The mod adds mastery information to attack action tooltips. It does not add **Vex**, **Nick**, or other mastery labels to weapons in the inventory or equipment panels.
 
-Weapon-record overrides can replace existing `PassivesOnEquip` data and miss child or modded weapons. UI overrides can also conflict with tooltip overhaul mods. We therefore keep tooltip support separate from the combat implementation rather than add fragile coverage to every weapon. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
+The mod identifies a mastery during combat from the attack weapon's proficiency group. Adding the same information to item tooltips would require many weapon-record overrides or a separate UI integration. Weapon-record overrides can remove existing `PassivesOnEquip` data. They can also miss child or modded weapons. UI overrides can conflict with tooltip overhaul mods. See [issue #2](https://github.com/datwaft/5.5e_Weapon_Mastery.bg3/issues/2).
 
 ### Topple's combat-log DC is shown as a resolved value
 
