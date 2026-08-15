@@ -3,11 +3,25 @@ SubGoalCombiner SGC_AND
 
 INITSECTION
 
+  // AttackSpellOverride changes the spell ID reported by UsingSpell and
+  // CastedSpell. Keep Nick's existing state machine compatible with every
+  // main-hand tooltip variant.
+  DB_WM55_Nick_MainHandAttackSpell("Target_MainHandAttack");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Vex");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Sap");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Slow");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Topple");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Push");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Graze");
+  DB_WM55_Nick_MainHandAttackSpell("Target_WM55_MainHandAttack_Cleave");
+
 KBSECTION
 
   // Record the bonus-action value before a normal main-hand attack starts.
   IF
-    UsingSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+    UsingSpell((CHARACTER)_Caster, (STRING)_Spell, _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_MainHandAttackSpell(_Spell)
   AND
     HasPassive(_Caster, "WM55_Known_Nick", 1)
   AND
@@ -73,7 +87,9 @@ KBSECTION
   // two AttackedBy events. These three cases are mutually exclusive, which lets
   // each case clean up its own automatic-attack fact safely.
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, (STRING)_Spell, _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_MainHandAttackSpell(_Spell)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
@@ -85,7 +101,9 @@ KBSECTION
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, (STRING)_Spell, _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_MainHandAttackSpell(_Spell)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
@@ -96,7 +114,9 @@ KBSECTION
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, (STRING)_Spell, _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_MainHandAttackSpell(_Spell)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
