@@ -1,0 +1,82 @@
+Version 1
+SubGoalCombiner SGC_AND
+
+INITSECTION
+
+KBSECTION
+
+  // Keep Topple's presentation statuses independent from its OnDamage passive.
+  PROC
+    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+  AND
+    HasPassive(_Character, "WM55_Known_Topple", 1)
+  AND
+    HasActiveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", 0)
+  THEN
+    ApplyStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
+
+  PROC
+    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+  AND
+    HasPassive(_Character, "WM55_Known_Topple", 1)
+  AND
+    HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 0)
+  THEN
+    ApplyStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", -1.0, 1, _Character);
+
+  PROC
+    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+  AND
+    HasPassive(_Character, "WM55_Known_Topple", 0)
+  AND
+    HasActiveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", 1)
+  THEN
+    RemoveStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE", _Character);
+
+  PROC
+    PROC_WM55_RefreshToppleAttackTooltips((CHARACTER)_Character)
+  AND
+    HasPassive(_Character, "WM55_Known_Topple", 0)
+  AND
+    HasActiveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", 1)
+  THEN
+    RemoveStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE", _Character);
+
+  // Seed existing saves after all player characters are available.
+  IF
+    SavegameLoaded()
+  AND
+    DB_Players((CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+  // Refresh after the character can gain or lose the Topple passive.
+  IF
+    LeveledUp((CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+  IF
+    RespecCompleted((CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+  IF
+    CharacterJoinedParty((CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+  // Let each hidden status inspect its corresponding hand after equipment changes.
+  IF
+    Equipped(_, (CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+  IF
+    Unequipped(_, (CHARACTER)_Character)
+  THEN
+    PROC_WM55_RefreshToppleAttackTooltips(_Character);
+
+EXITSECTION
+
+ENDEXITSECTION
