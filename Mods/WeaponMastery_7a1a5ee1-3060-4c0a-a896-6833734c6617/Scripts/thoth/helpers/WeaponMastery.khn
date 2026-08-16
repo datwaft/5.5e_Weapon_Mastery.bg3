@@ -90,9 +90,9 @@ function WM55_HasMasteryMainHandWeapon(weaponGroups)
     end
 
   return WM55_IsEligibleMasteryWeapon(
-  weaponGroups,
-  GetActiveWeapon(context.Source, true)
-  )
+    weaponGroups,
+    GetItemInEquipmentSlot(EquipmentSlot.MeleeMainHand, context.Source)
+    )
   end
 
 function WM55_HasMasteryOffHandWeapon(weaponGroups)
@@ -101,9 +101,9 @@ function WM55_HasMasteryOffHandWeapon(weaponGroups)
     end
 
   return WM55_IsEligibleMasteryWeapon(
-  weaponGroups,
-  GetActiveWeapon(context.Source, false)
-  )
+    weaponGroups,
+    GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, context.Source)
+    )
   end
 
 function WM55_HasMasteryRangedMainHandWeapon(weaponGroups)
@@ -170,7 +170,7 @@ function WM55_HasNickOffhandWeapon()
     return ConditionResult(false)
     end
 
-  local offhandWeapon = GetActiveWeapon(context.Source, false)
+  local offhandWeapon = GetItemInEquipmentSlot(EquipmentSlot.MeleeOffHand, context.Source)
 
   return WM55_IsEligibleMasteryWeapon(
   'Daggers|LightHammers|Sickles|Scimitars',
