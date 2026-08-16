@@ -5,20 +5,43 @@ INITSECTION
 
 KBSECTION
 
-  // Keep attack presentation statuses independent from mastery mechanics.
+  // One provider status evaluates every attack tooltip override as a
+  // conditional boost, so the tooltip always follows the equipped weapon.
   PROC
-    PROC_WM55_SyncAttackTooltipStatus((CHARACTER)_Character, (STRING)_Passive, (STRING)_Status)
+    PROC_WM55_SyncAttackTooltipProvider((CHARACTER)_Character, (STRING)_Passive)
   AND
     HasPassive(_Character, _Passive, 1)
   AND
-    HasActiveStatus(_Character, _Status, 0)
+    HasActiveStatus(_Character, "WM55_ATTACK_TOOLTIP_PROVIDER", 0)
   THEN
-    ApplyStatus(_Character, _Status, -1.0, 1, _Character);
+    ApplyStatus(_Character, "WM55_ATTACK_TOOLTIP_PROVIDER", -1.0, 1, _Character);
 
   PROC
-    PROC_WM55_SyncAttackTooltipStatus((CHARACTER)_Character, (STRING)_Passive, (STRING)_Status)
+    PROC_WM55_RemoveAttackTooltipProvider((CHARACTER)_Character)
   AND
-    HasPassive(_Character, _Passive, 0)
+    HasPassive(_Character, "WM55_Known_Vex", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Sap", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Slow", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Topple", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Push", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Graze", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Cleave", 0)
+  AND
+    HasPassive(_Character, "WM55_Known_Nick", 0)
+  AND
+    HasActiveStatus(_Character, "WM55_ATTACK_TOOLTIP_PROVIDER", 1)
+  THEN
+    RemoveStatus(_Character, "WM55_ATTACK_TOOLTIP_PROVIDER", _Character);
+
+  // Purge per-mastery override statuses left in saves by earlier versions.
+  PROC
+    PROC_WM55_PurgeLegacyAttackTooltipStatus((CHARACTER)_Character, (STRING)_Status)
   AND
     HasActiveStatus(_Character, _Status, 1)
   THEN
@@ -27,23 +50,32 @@ KBSECTION
   PROC
     PROC_WM55_RefreshAttackTooltips((CHARACTER)_Character)
   THEN
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_RANGED_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Vex", "WM55_VEX_RANGED_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Sap", "WM55_SAP_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Sap", "WM55_SAP_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Slow", "WM55_SLOW_RANGED_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Topple", "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Topple", "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_OFFHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Push", "WM55_PUSH_RANGED_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Graze", "WM55_GRAZE_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Cleave", "WM55_CLEAVE_MAINHAND_ATTACK_OVERRIDE");
-    PROC_WM55_SyncAttackTooltipStatus(_Character, "WM55_Known_Nick", "WM55_NICK_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_VEX_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_VEX_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_VEX_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_VEX_RANGED_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_SAP_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_SAP_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_SLOW_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_SLOW_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_SLOW_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_TOPPLE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_TOPPLE_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_PUSH_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_PUSH_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_PUSH_RANGED_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_GRAZE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_CLEAVE_MAINHAND_ATTACK_OVERRIDE");
+    PROC_WM55_PurgeLegacyAttackTooltipStatus(_Character, "WM55_NICK_OFFHAND_ATTACK_OVERRIDE");
+    PROC_WM55_RemoveAttackTooltipProvider(_Character);
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Vex");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Sap");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Slow");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Topple");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Push");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Graze");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Cleave");
+    PROC_WM55_SyncAttackTooltipProvider(_Character, "WM55_Known_Nick");
 
   // Seed existing saves after all player characters are available.
   IF
@@ -53,7 +85,7 @@ KBSECTION
   THEN
     PROC_WM55_RefreshAttackTooltips(_Character);
 
-  // Refresh after characters gain or lose mastery passives.
+  // Refresh presentation providers after characters gain or lose mastery passives.
   IF
     LeveledUp((CHARACTER)_Character)
   THEN
@@ -69,7 +101,6 @@ KBSECTION
   THEN
     PROC_WM55_RefreshAttackTooltips(_Character);
 
-  // Refresh presentation providers after equipment changes.
   IF
     Equipped(_, (CHARACTER)_Character)
   THEN
