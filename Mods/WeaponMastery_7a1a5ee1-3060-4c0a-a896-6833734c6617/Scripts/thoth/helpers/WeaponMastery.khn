@@ -3,93 +3,93 @@ function WM55_GetThrownWeapon()
 
   if hitDescription == nil then
     return nil
-    end
+  end
 
   local thrownObject = hitDescription.ThrownObject
 
   if thrownObject == nil or not thrownObject.IsValid then
     return nil
-    end
+  end
 
   return thrownObject
-  end
+end
 
 function WM55_IsThrownWeaponAttack()
   local thrownObject = WM55_GetThrownWeapon()
 
   if thrownObject == nil or not thrownObject.IsValid then
     return ConditionResult(false)
-    end
+  end
 
   return SpellTypeIs(SpellType.Throw)
-  & HasWeaponProperty(WeaponProperties.Thrown, thrownObject)
-  end
+    & HasWeaponProperty(WeaponProperties.Thrown, thrownObject)
+end
 
 function WM55_GetAttackWeapon()
   if WM55_IsThrownWeaponAttack().Result then
     return WM55_GetThrownWeapon()
-    end
+  end
 
   return GetAttackWeapon(context.Source)
-  end
+end
 
 function WM55_IsMeleeAttackMode()
   return IsMeleeWeaponAttack()
-  end
+end
 
 function WM55_IsRangedAttackMode()
   return IsRangedWeaponAttack()
-  & ~WM55_IsThrownWeaponAttack()
-  end
+    & ~WM55_IsThrownWeaponAttack()
+end
 
 function WM55_IsWeaponAttack()
   return WM55_IsMeleeAttackMode()
-  | WM55_IsRangedAttackMode()
-  | WM55_IsThrownWeaponAttack()
-  end
+    | WM55_IsRangedAttackMode()
+    | WM55_IsThrownWeaponAttack()
+end
 
 function WM55_IsProficientWithAttackWeapon()
   local attackWeapon = WM55_GetAttackWeapon()
 
   return attackWeapon.IsValid
-  and IsProficientWith(context.Source, attackWeapon)
-  end
+    and IsProficientWith(context.Source, attackWeapon)
+end
 
 function WM55_IsMeleeWeapon(weapon)
   if weapon == nil or not weapon.IsValid then
     return ConditionResult(false)
-    end
+  end
 
   return HasWeaponProperty(WeaponProperties.Melee, weapon)
-  end
+end
 
 function WM55_HasMasteryAccess(weapon)
   if context.Source == nil or weapon == nil or not weapon.IsValid then
     return ConditionResult(false)
-    end
+  end
 
   return HasPassive('WM55_Access_ProficientWeapons', context.Source)
-  | (
-  HasPassive('WM55_Access_MeleeWeapons', context.Source)
-  & WM55_IsMeleeWeapon(weapon)
-  )
-  end
+    | (
+      HasPassive('WM55_Access_MeleeWeapons', context.Source)
+      & WM55_IsMeleeWeapon(weapon)
+    )
+end
 
 function WM55_CanUseMasteryOnAttack(weaponGroups)
   local attackWeapon = WM55_GetAttackWeapon()
 
   return WM55_IsWeaponAttack()
-  & WM55_IsProficientWithAttackWeapon()
-  & WM55_HasMasteryAccess(attackWeapon)
-  & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
-  end
+    & WM55_IsProficientWithAttackWeapon()
+    & WM55_HasMasteryAccess(attackWeapon)
+    & IsWeaponOfProficiencyGroup(weaponGroups, attackWeapon)
+end
 
 function WM55_AttackAbilityModifier()
   local hitDescription = context.HitDescription
 
   if hitDescription == nil or context.Source == nil then
     return 0
-    end
+  end
 
   local attackAbility = hitDescription.AttackAbility
   local source = context.Source
@@ -106,51 +106,51 @@ function WM55_AttackAbilityModifier()
     return GetModifier(source.Wisdom)
   elseif attackAbility == Ability.Charisma then
     return GetModifier(source.Charisma)
-    end
+  end
 
   return 0
-  end
+end
 
 function WM55_HasNickOffhandWeapon()
   if context.Source == nil then
     return ConditionResult(false)
-    end
+  end
 
   local offhandWeapon = GetActiveWeapon(context.Source, false)
 
   if offhandWeapon == nil or not offhandWeapon.IsValid then
     return ConditionResult(false)
-    end
+  end
 
   return IsWeaponOfProficiencyGroup(
-  'Daggers|LightHammers|Sickles|Scimitars',
-  offhandWeapon
+    'Daggers|LightHammers|Sickles|Scimitars',
+    offhandWeapon
   )
-  & HasWeaponProperty(WeaponProperties.Light, offhandWeapon)
-  & IsProficientWith(context.Source, offhandWeapon)
-  & WM55_HasMasteryAccess(offhandWeapon)
-  end
+    & HasWeaponProperty(WeaponProperties.Light, offhandWeapon)
+    & IsProficientWith(context.Source, offhandWeapon)
+    & WM55_HasMasteryAccess(offhandWeapon)
+end
 
 function WM55_CanTriggerNick()
   local attackWeapon = WM55_GetAttackWeapon()
 
   if attackWeapon == nil or not attackWeapon.IsValid then
     return ConditionResult(false)
-    end
+  end
 
   return WM55_IsWeaponAttack()
-  & WM55_IsMeleeAttackMode()
-  & IsMainHandAttack()
-  & IsProficientWith(context.Source, attackWeapon)
-  & WM55_HasMasteryAccess(attackWeapon)
-  & HasWeaponProperty(WeaponProperties.Light, attackWeapon)
-  & WM55_HasNickOffhandWeapon()
-  end
+    & WM55_IsMeleeAttackMode()
+    & IsMainHandAttack()
+    & IsProficientWith(context.Source, attackWeapon)
+    & WM55_HasMasteryAccess(attackWeapon)
+    & HasWeaponProperty(WeaponProperties.Light, attackWeapon)
+    & WM55_HasNickOffhandWeapon()
+end
 
 function WM55_BaseMasteryIsSuppressed()
   if context.Source == nil then
     return ConditionResult(false)
-    end
+  end
 
   return HasPassive('WM55_Override_BaseMastery', context.Source)
-  end
+end
