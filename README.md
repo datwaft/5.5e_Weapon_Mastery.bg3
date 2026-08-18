@@ -28,7 +28,7 @@ The mod implements all eight 5.5e _Weapon Mastery_ properties:
 | --- | --- |
 | **Cleave** | Once per turn, **hitting** with a Greataxe or Halberd lets you make another attack against a nearby target. |
 | **Graze** | When you **miss** with a Glaive or Greatsword, deal damage equal to your attack **Ability Modifier**. |
-| **Nick** | Once per turn, **attacking** with a **Light** melee weapon while wielding a Dagger, Light Hammer, Sickle, or Scimitar in your off hand lets you make your next off-hand attack without spending a **Bonus Action**. |
+| **Nick** | Once per turn, after **attacking** with a melee weapon in your main hand, you can make an off-hand attack with a Dagger, Light Hammer, Sickle, or Scimitar without using a **Bonus Action**. |
 | **Push** | When you **hit** with a Greatclub, Pike, Warhammer, or Heavy Crossbow, you can push the target 3 m away. |
 | **Sap** | When you **hit** with a Mace, Spear, Flail, Longsword, Morningstar, or War Pick, the target gains **Disadvantage** on its next attack. |
 | **Slow** | When you damage a target with a Club, Javelin, Light Crossbow, or Longbow, reduce its **Movement Speed** by 3 m. |
@@ -149,7 +149,7 @@ With the native toggle off, this mirrors the way BG3 presents **Extra Attack**: 
 
 ### Nick and Dual Wielder
 
-Nick does not normally add an attack. It lets you use the extra off-hand attack granted by the **Light** property without spending a Bonus Action.
+Nick does not normally add an attack. It lets you use the extra off-hand attack granted by having a weapon in your off-hand equipment slot without spending a Bonus Action.
 
 The diagrams in this section describe the separate-action path with the native Dual Wielding toggle off. The linked path still uses the same Nick and Dual Wielder accounting.
 
@@ -163,7 +163,7 @@ flowchart TD
     B -->|Use Nick| C["Off-Hand (disabled)"]
 ```
 
-Without Dual Wielder, using the free Nick attack consumes the Light-property extra attack.
+Without Dual Wielder, using the free Nick attack consumes the melee off-hand attack.
 
 However, this mod gives BG3's existing **Dual Wielder** feat the interaction it has with Nick in the 5.5e rules:
 
