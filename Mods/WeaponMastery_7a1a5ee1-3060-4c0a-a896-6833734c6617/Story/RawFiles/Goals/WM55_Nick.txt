@@ -5,25 +5,27 @@ INITSECTION
 
 KBSECTION
 
-  // Record the bonus-action value before a normal main-hand attack starts.
+  // Record the caster's Bonus Action value before the main-hand attack resolves.
   IF
     UsingSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
     HasPassive(_Caster, "WM55_Known_Nick", 1)
   AND
-    GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPoints)
+    GetActionResourceValuePersonal(_Caster, "BonusActionPoint", 0, _BonusActionPoints)
   THEN
     DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
 
-  // WM55_NICK_READY is applied by the Nick passive during the main-hand attack.
-  // A lower bonus-action value means that BG3 also performed its automatic
-  // off-hand attack. Nick refunds that cost and records the automatic sequence.
+  // Reasoning:
+  //   WM55_NICK_READY is applied by the Nick passive during the main-hand attack.
+  //   If the caster has spent a bonus action since the attack started, infer
+  //   that BG3 performed its automatic off-hand attack. Refund the cost and
+  //   record the automatic attack sequence.
   IF
     StatusApplied((CHARACTER)_Caster, "WM55_NICK_READY", _, _StoryActionID)
   AND
     DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
   AND
-    GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
+    GetActionResourceValuePersonal(_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
   AND
     _BonusActionPointsAfter < _BonusActionPointsBefore
   THEN
@@ -33,13 +35,16 @@ KBSECTION
     NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore);
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, 0);
 
-  // No bonus action was spent, so this was a normal main-hand-only attack.
+  // Reasoning:
+  //   If no Bonus Action was spent during the main-hand attack, BG3 did not
+  //   perform its automatic off-hand attack. Clear the pending attack state and
+  //   leave WM55_NICK_READY active for a manual off-hand attack.
   IF
     StatusApplied((CHARACTER)_Caster, "WM55_NICK_READY", _, _StoryActionID)
   AND
     DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPointsBefore)
   AND
-    GetActionResourceValuePersonal((CHARACTER)_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
+    GetActionResourceValuePersonal(_Caster, "BonusActionPoint", 0, _BonusActionPointsAfter)
   AND
     _BonusActionPointsAfter >= _BonusActionPointsBefore
   THEN
@@ -58,6 +63,8 @@ KBSECTION
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _CompletedAttacks);
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _AttackOwner, _NewCompletedAttacks);
 
+  // After the automatic main-hand/off-hand sequence completes, block further
+  // off-hand attacks unless Dual Wielder allows an additional one.
   IF
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
@@ -84,6 +91,8 @@ KBSECTION
     ApplyStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 6.0, 1, _Caster);
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
+  // If the off-hand block was already applied before the automatic sequence
+  // finishes, only clean up the tracking state.
   IF
     CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
@@ -95,6 +104,7 @@ KBSECTION
   THEN
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
+  // If the caster has Dual Wielder, only clean up the tracking state.
   IF
     CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
@@ -104,7 +114,7 @@ KBSECTION
   THEN
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
-  // Discard incomplete state for this character when its next turn begins.
+  // Clean up an incomplete automatic-attack state when the caster's next turn begins.
   IF
     TurnStarted((CHARACTER)_Caster)
   AND
@@ -112,6 +122,7 @@ KBSECTION
   THEN
     NOT DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
 
+  // Clean up an incomplete automatic-attack state when the caster's next turn begins.
   IF
     TurnStarted((CHARACTER)_Caster)
   AND
