@@ -79,19 +79,23 @@ function WM55_HasMasteryAccess(weapon)
     )
 end
 
+--- Returns whether the source can use the given mastery with the given weapon.
+function WM55_CanUseMasteryWithWeapon(mastery, weapon)
+  local weapon_groups = WM55_WEAPON_GROUPS[mastery]
+
+  if weapon == nil or not weapon.IsValid or weapon_groups == nil then
+    return ConditionResult(false)
+  end
+
+  return WM55_HasMasteryAccess(weapon) & IsWeaponOfProficiencyGroup(weapon_groups, weapon)
+end
+
 --- Used in a hit context.
 --- Returns whether the source can use the given mastery with the weapon used for the current attack.
 function WM55_CanUseMasteryOnAttack(mastery)
   local attack_weapon = WM55_GetAttackWeapon()
-  local weapon_groups = WM55_WEAPON_GROUPS[mastery]
 
-  if attack_weapon == nil or not attack_weapon.IsValid or weapon_groups == nil then
-    return ConditionResult(false)
-  end
-
-  return WM55_IsWeaponAttack()
-    & WM55_HasMasteryAccess(attack_weapon)
-    & IsWeaponOfProficiencyGroup(weapon_groups, attack_weapon)
+  return WM55_IsWeaponAttack() & WM55_CanUseMasteryWithWeapon(mastery, attack_weapon)
 end
 
 --- Used in a hit context.
