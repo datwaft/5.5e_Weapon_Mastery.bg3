@@ -110,6 +110,14 @@ function WM55_AttackAbilityModifier()
   return GetModifier(ability_score)
 end
 
+--- Used in a hit context.
+--- Returns the Topple save DC for the current attack.
+function WM55_ToppleSaveDC()
+  return 8
+    + context.Source.ProficiencyBonus
+    + WM55_AttackAbilityModifier()
+end
+
 --- Returns whether the source has an eligible Nick weapon in the active off-hand.
 function WM55_HasNickOffhandWeapon()
   local offhand_weapon = GetActiveWeapon(context.Source, false)
