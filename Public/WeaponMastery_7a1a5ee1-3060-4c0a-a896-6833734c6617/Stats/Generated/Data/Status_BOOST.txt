@@ -55,13 +55,6 @@ new entry "WM55_SLOWED"
   data "StatusGroups" "SG_Condition;SG_Restrained"
   data "ManagedStatusEffectType" "Negative"
 
-new entry "WM55_PUSH_INTERRUPT"
-  type "StatusData"
-  data "StatusType" "BOOST"
-  data "StackId" "WM55_PUSH_INTERRUPT"
-  data "StatusPropertyFlags" "DisableOverhead;DisableCombatlog;DisablePortraitIndicator"
-  data "OnApplyFunctors" "Force(3,OriginToEntity,Aggressive)"
-
 new entry "WM55_CLEAVE_TECHNICAL"
   type "StatusData"
   data "StatusType" "BOOST"
