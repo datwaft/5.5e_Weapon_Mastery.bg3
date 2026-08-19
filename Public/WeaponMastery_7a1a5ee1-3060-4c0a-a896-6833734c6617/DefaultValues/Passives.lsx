@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<save>
+  <version major="4" minor="8" revision="0" build="500"/>
+  <region id="DefaultValues">
+    <node id="root">
+      <children>
+        <!-- Barbarian: Level 1 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Cleave;WM55_Known_Graze"/>
+          <attribute id="Level" type="int32" value="1"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="60bbcc97-5381-4898-bc15-908c072895de"/>
+          <attribute id="UUID" type="guid" value="87524e1f-aedf-4967-823b-5b33bb9c9687"/>
+        </node>
+        <!-- Barbarian: Level 4 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Topple"/>
+          <attribute id="Level" type="int32" value="4"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="60bbcc97-5381-4898-bc15-908c072895de"/>
+          <attribute id="UUID" type="guid" value="c5fefa3a-b2a0-431a-98c3-cd43d8eb4a89"/>
+        </node>
+        <!-- Barbarian: Level 10 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Push"/>
+          <attribute id="Level" type="int32" value="10"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="60bbcc97-5381-4898-bc15-908c072895de"/>
+          <attribute id="UUID" type="guid" value="a8281b2c-40a4-4bc1-a199-67ced0360e10"/>
+        </node>
+
+
+        <!-- Fighter: Level 1 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Graze;WM55_Known_Topple;WM55_Known_Vex"/>
+          <attribute id="Level" type="int32" value="1"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="ba4e707e-4bbd-4630-963b-ce2f2947f971"/>
+          <attribute id="UUID" type="guid" value="d6c210d1-7d18-47a7-896f-78c5a2532ca7"/>
+        </node>
+        <!-- Fighter: Level 4 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Cleave"/>
+          <attribute id="Level" type="int32" value="4"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="ba4e707e-4bbd-4630-963b-ce2f2947f971"/>
+          <attribute id="UUID" type="guid" value="326d3846-ceeb-4684-916e-ccfc57c9206e"/>
+        </node>
+        <!-- Fighter: Level 10 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Push"/>
+          <attribute id="Level" type="int32" value="10"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="ba4e707e-4bbd-4630-963b-ce2f2947f971"/>
+          <attribute id="UUID" type="guid" value="15b6bfcd-0554-41cd-b9f6-f50123c24bcc"/>
+        </node>
+
+
+        <!-- Paladin: Level 1 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Sap;WM55_Known_Topple"/>
+          <attribute id="Level" type="int32" value="1"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="ba2afe85-acba-4ea1-a238-2b4543f47821"/>
+          <attribute id="UUID" type="guid" value="1240ef4b-2092-489f-af9c-67c14fd4b28c"/>
+        </node>
+
+
+        <!-- Ranger: Level 1 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Slow;WM55_Known_Vex"/>
+          <attribute id="Level" type="int32" value="1"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="8f068974-ed32-43fc-a9d9-028be1c01a9c"/>
+          <attribute id="UUID" type="guid" value="3be665dc-cf09-4901-af39-daa0695737f4"/>
+        </node>
+
+
+        <!-- Rogue: Level 1 -->
+        <node id="DefaultValue">
+          <attribute id="Add" type="LSString" value="WM55_Known_Nick;WM55_Known_Vex"/>
+          <attribute id="Level" type="int32" value="1"/>
+          <attribute id="SelectorId" type="LSString" value="WeaponMasteries"/>
+          <attribute id="TableUUID" type="guid" value="9a44e828-92db-4d6c-acbc-a4f8ef340415"/>
+          <attribute id="UUID" type="guid" value="9ef66e59-7140-406d-80ca-1c15dd4e7b40"/>
+        </node>
+      </children>
+    </node>
+  </region>
+</save>
