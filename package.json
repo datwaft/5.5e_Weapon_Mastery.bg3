@@ -2,6 +2,9 @@
   "name": "5.5e Weapon Mastery",
   "private": true,
   "type": "module",
+  "scripts": {
+    "link": "node ./scripts/link.mts"
+  },
   "devDependencies": {
     "@types/node": "^26.2.0",
     "typescript": "^7.0.2"
