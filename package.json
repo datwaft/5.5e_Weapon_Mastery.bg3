@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "link": "node ./scripts/link.mts",
-    "unlink": "node ./scripts/unlink.mts"
+    "unlink": "node ./scripts/unlink.mts",
+    "stage": "node ./scripts/stage.mts",
+    "package": "node ./scripts/package.mts"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
