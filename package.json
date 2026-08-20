@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "link": "node ./scripts/link.mts"
+    "link": "node ./scripts/link.mts",
+    "unlink": "node ./scripts/unlink.mts"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
