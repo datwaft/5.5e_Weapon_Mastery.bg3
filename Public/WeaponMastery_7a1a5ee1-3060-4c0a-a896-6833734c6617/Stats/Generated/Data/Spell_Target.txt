@@ -16,3 +16,8 @@ new entry "Target_WM55_CleaveAttack"
   data "AlternativeCastTextEvents" "%%%EMPTY"
   data "DualWieldingUseCosts" "%%%EMPTY"
   data "PrepareEffect" "9342eaf4-6a20-44c6-a740-863b0f9c2475"
+
+new entry "Target_WM55_MainHandAttack_NoOffhand"
+  type "SpellData"
+  using "Target_MainHandAttack"
+  data "SpellFlags" "IsAttack;IsMelee;IsHarmful"
