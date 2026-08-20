@@ -3,22 +3,23 @@ import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
 import { load } from "cheerio";
 
 const exec_file = promisify(execFile);
+const ROOT = dirname(import.meta.dirname);
 
 const runner_temp = process.env.RUNNER_TEMP;
 assert(runner_temp, "$RUNNER_TEMP should be set");
 
 /**
  * This directory will store one temporary package root for each module.
- * @example `$RUNNER_TEMP/packages/WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617/`
+ * @example `dist/.staging/WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617/`
  */
-const packages_root = resolve(runner_temp, "packages");
+const packages_root = resolve(ROOT, "dist", ".staging");
 
 const divine = resolve(runner_temp, "lslib", "Packed", "Tools", "Divine.exe");
-const output_directory = resolve(process.cwd(), "dist");
+const output_directory = resolve(ROOT, "dist");
 const exec_options = { maxBuffer: 100 * 1024 * 1024 };
 await fs.mkdir(output_directory, { recursive: true });
 
@@ -56,5 +57,8 @@ for (const entry of await fs.readdir(packages_root, { withFileTypes: true })) {
     .update(await fs.readFile(package_path))
     .digest("hex");
   await fs.writeFile(`${package_path}.sha256`, `${hash}  ${package_name}\n`);
+  await fs.rm(package_root, { recursive: true, force: true });
   console.log(`Packaged ${name} (${id}) as ${package_name}`);
 }
+
+await fs.rm(packages_root, { recursive: true, force: true });

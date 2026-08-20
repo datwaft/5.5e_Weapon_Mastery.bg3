@@ -4,10 +4,8 @@ import { basename, dirname, resolve } from "node:path";
 import { load } from "cheerio";
 
 const ROOT = dirname(import.meta.dirname);
-const runner_temp = process.env.RUNNER_TEMP;
 const release_tag = process.env.GITHUB_REF_NAME;
 
-assert(runner_temp, "$RUNNER_TEMP should be set");
 assert(release_tag, "$GITHUB_REF_NAME should be set");
 
 const tag_match = /^v(\d+)\.(\d+)\.(\d+)$/.exec(release_tag);
@@ -26,9 +24,9 @@ const expected_version64 = (major << 55n) + (minor << 47n) + (revision << 31n);
 
 /**
  * This directory will store one temporary package root for each module.
- * @example `$RUNNER_TEMP/packages/WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617/`
+ * @example `dist/.staging/WeaponMastery_7a1a5ee1-3060-4c0a-a896-6833734c6617/`
  */
-const packages_root = resolve(runner_temp, "packages");
+const packages_root = resolve(ROOT, "dist", ".staging");
 await fs.rm(packages_root, { recursive: true, force: true });
 await fs.mkdir(packages_root, { recursive: true });
 
