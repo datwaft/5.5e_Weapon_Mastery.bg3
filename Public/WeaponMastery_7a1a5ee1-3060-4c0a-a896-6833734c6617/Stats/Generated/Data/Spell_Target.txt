@@ -16,3 +16,8 @@ new entry "Target_WM55_CleaveAttack"
   data "AlternativeCastTextEvents" "%%%EMPTY"
   data "DualWieldingUseCosts" "%%%EMPTY"
   data "PrepareEffect" "9342eaf4-6a20-44c6-a740-863b0f9c2475"
+
+new entry "Target_MainHandAttack"
+  type "SpellData"
+  data "SpellProperties" "GROUND:DealDamage(MainMeleeWeapon,MainMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(MainHand);IF(not HasStatus('WM55_NICK_OFFHAND_BLOCK',context.Source)):CastOffhand[GROUND:DealDamage(OffhandMeleeWeapon,OffhandMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(OffHand)];IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1);"
+  data "SpellRoll" "Attack(AttackType.MeleeWeaponAttack);IF(not HasStatus('WM55_NICK_OFFHAND_BLOCK',context.Source)):CastOffhand[Attack(AttackType.MeleeOffHandWeaponAttack)]"
