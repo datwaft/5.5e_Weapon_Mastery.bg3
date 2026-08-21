@@ -15,6 +15,22 @@ KBSECTION
   THEN
     DB_WM55_Nick_PendingMainHandAttack(_StoryActionID, _Caster, _BonusActionPoints);
 
+  // Temporarily make the Bonus Action unavailable while a later main-hand
+  // attack resolves. The native spell has already been accepted when this
+  // event fires, so the main-hand action remains available while the linked
+  // off-hand action must fail its Bonus Action resource check.
+  IF
+    UsingSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+  AND
+    HasActiveStatus(_Caster, "WM55_NICK_OFFHAND_BLOCK", 1)
+  AND
+    HasActiveStatus(_Caster, "WM55_NICK_MAINHAND_BA_BLOCK", 0)
+  AND
+    NOT DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster)
+  THEN
+    ApplyStatus(_Caster, "WM55_NICK_MAINHAND_BA_BLOCK", 6.0, 1, _Caster);
+    DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster);
+
   // Reasoning:
   //   WM55_NICK_READY is applied by the Nick passive during the main-hand attack.
   //   If the caster has spent a bonus action since the attack started, infer
@@ -104,6 +120,26 @@ KBSECTION
   THEN
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
 
+  // Release the temporary resource block when the same native main-hand
+  // action completes. CastedSpell is also the cleanup path for misses.
+  IF
+    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster)
+  THEN
+    RemoveStatus(_Caster, "WM55_NICK_MAINHAND_BA_BLOCK", _Caster);
+    NOT DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster);
+
+  // CastSpellFailed covers a native cast that was accepted by UsingSpell but
+  // never reached CastedSpell, such as an interrupted or cancelled action.
+  IF
+    CastSpellFailed((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
+  AND
+    DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster)
+  THEN
+    RemoveStatus(_Caster, "WM55_NICK_MAINHAND_BA_BLOCK", _Caster);
+    NOT DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster);
+
   // If the caster has Dual Wielder, only clean up the tracking state.
   IF
     CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
@@ -129,6 +165,16 @@ KBSECTION
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   THEN
     NOT DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks);
+
+  // Remove a block left behind by an interrupted or cancelled cast when the
+  // normal CastedSpell completion event was not emitted.
+  IF
+    TurnStarted((CHARACTER)_Caster)
+  AND
+    DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster)
+  THEN
+    RemoveStatus(_Caster, "WM55_NICK_MAINHAND_BA_BLOCK", _Caster);
+    NOT DB_WM55_Nick_BonusActionBlock(_StoryActionID, _Caster);
 
 EXITSECTION
 
