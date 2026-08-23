@@ -7,7 +7,7 @@ KBSECTION
 
   // Record the caster's Bonus Action value before the main-hand attack resolves.
   IF
-    UsingSpell((CHARACTER)_Caster, "Target_WM55_MainHandAttack_Nick", _, _, _StoryActionID)
+    UsingSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
     HasPassive(_Caster, "WM55_Known_Nick", 1)
   AND
@@ -80,7 +80,7 @@ KBSECTION
   // two AttackedBy events. These three cases are mutually exclusive, which lets
   // each case clean up its own automatic-attack fact safely.
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_WM55_MainHandAttack_Nick", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
@@ -94,7 +94,7 @@ KBSECTION
   // If the off-hand block was already applied before the automatic sequence
   // finishes, only clean up the tracking state.
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_WM55_MainHandAttack_Nick", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
@@ -106,7 +106,7 @@ KBSECTION
 
   // If the caster has Dual Wielder, only clean up the tracking state.
   IF
-    CastedSpell((CHARACTER)_Caster, "Target_WM55_MainHandAttack_Nick", _, _, _StoryActionID)
+    CastedSpell((CHARACTER)_Caster, "Target_MainHandAttack", _, _, _StoryActionID)
   AND
     DB_WM55_Nick_AutomaticAttack(_StoryActionID, _Caster, _CompletedAttacks)
   AND
