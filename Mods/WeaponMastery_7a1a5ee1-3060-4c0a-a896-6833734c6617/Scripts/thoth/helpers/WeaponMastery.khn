@@ -136,6 +136,10 @@ end
 --- Used in a hit context.
 --- Returns whether the current main-hand attack can grant the Nick extra attack.
 function WM55_CanTriggerNick()
+  if HasStatus('REACTION', context.Source).Result then
+    return ConditionResult(false)
+  end
+
   return IsMeleeWeaponAttack()
     & IsMainHandAttack()
     & WM55_HasNickOffhandWeapon()
