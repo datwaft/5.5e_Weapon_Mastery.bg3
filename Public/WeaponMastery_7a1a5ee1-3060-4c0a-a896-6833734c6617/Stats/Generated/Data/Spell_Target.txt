@@ -1,3 +1,10 @@
+new entry "Target_WM55_MainHandAttack_Nick"
+  type "SpellData"
+  using "Target_MainHandAttack"
+  data "SpellProperties" "GROUND:DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(MainHand);IF(not HasStatus('WM55_NICK_OFFHAND_BLOCK',context.Source)):CastOffhand[GROUND:DealDamage(OffhandMeleeWeapon, OffhandMeleeWeaponDamageType);GROUND:ExecuteWeaponFunctors(OffHand)];IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1);"
+  data "SpellRoll" "Attack(AttackType.MeleeWeaponAttack);IF(not HasStatus('WM55_NICK_OFFHAND_BLOCK',context.Source)):CastOffhand[Attack(AttackType.MeleeOffHandWeaponAttack)]"
+  data "SpellSuccess" "DealDamage(max(1,MainMeleeWeapon), MainMeleeWeaponDamageType);ExecuteWeaponFunctors(MainHand);IF(not HasStatus('WM55_NICK_OFFHAND_BLOCK',context.Source)):CastOffhand[DealDamage(max(0,OffhandMeleeWeapon), OffhandMeleeWeaponDamageType);ExecuteWeaponFunctors(OffHand)]"
+
 new entry "Target_WM55_CleaveAttack"
   type "SpellData"
   using "Target_HordeBreaker_Free"
